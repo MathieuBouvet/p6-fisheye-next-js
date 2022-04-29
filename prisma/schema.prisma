@@ -56,7 +56,7 @@ enum MediumType {
 
 model Tag {
   id               Int               @id @default(autoincrement())
-  name             String
+  name             String            @unique
   photographerTags PhotographerTag[]
   mediumTags       MediumTag[]
 }
