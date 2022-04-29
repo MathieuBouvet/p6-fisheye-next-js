@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                      Int           @id @default(autoincrement())
+  email                   String        @db.VarChar(255)
+  firstName               String
+  lastName                String
+  password                String
+  profilePicUrl           String?
+  profilePicDominantColor String?       @default("FFFFFF") @db.Char(6)
+  isAdmin                 Boolean
+  photographer            Photographer?
+}
+
+model Photographer {
+  id      Int               @id @default(autoincrement())
+  user    User              @relation(fields: [userId], references: [id])
+  userId  Int               @unique
+  city    String
+  country String
+  price   Int?
+  tagLine String?           @db.VarChar(255)
+  media   Medium[]
+  tags    PhotographerTag[]
+}
+
+model Medium {
+  id             Int          @id @default(autoincrement())
+  title          String
+  createdAt      DateTime     @default(now())
+  type           MediumType
+  url            String       @db.VarChar(255)
+  price          Int?
+  altText        String?      @db.VarChar(255)
+  dominantColor  String?      @default("FFFFFF") @db.Char(6)
+  photographer   Photographer @relation(fields: [photographerId], references: [id])
+  photographerId Int
+  tags           MediumTag[]
+  likes          Like[]
+}
+
+enum MediumType {
+  PICTURE
+  VIDEO
+}
+
+model Tag {
+  id               Int               @id @default(autoincrement())
+  name             String
+  photographerTags PhotographerTag[]
+  mediumTags       MediumTag[]
+}
+
+model PhotographerTag {
+  tag            Tag          @relation(fields: [tagId], references: [id])
+  tagId          Int
+  photographer   Photographer @relation(fields: [photographerId], references: [id])
+  photographerId Int
+
+  @@id([tagId, photographerId])
+}
+
+model MediumTag {
+  tagId    Int
+  tag      Tag    @relation(fields: [tagId], references: [id])
+  mediumId Int
+  medium   Medium @relation(fields: [mediumId], references: [id])
+
+  @@id([tagId, mediumId])
+}
+
+model Visitor {
+  id          Int    @id @default(autoincrement())
+  ipv4Address Int    @db.UnsignedInt
+  likes       Like[]
+}
+
+model Like {
+  visitorId Int
+  mediumId  Int
+  visitor   Visitor @relation(fields: [visitorId], references: [id])
+  medium    Medium  @relation(fields: [mediumId], references: [id])
+
+  @@id([visitorId, mediumId])
+}
