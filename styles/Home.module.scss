@@ -1,0 +1,11 @@
+@use "./mixins/mediaQuery";
+
+.test {
+  background-color: red;
+}
+
+@include mediaQuery.screen("sm") {
+  .test {
+    background-color: aliceblue;
+  }
+}

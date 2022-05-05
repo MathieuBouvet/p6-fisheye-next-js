@@ -1,0 +1,21 @@
+@use "/styles/constants/colors";
+
+.tag {
+  border-radius: 5000px;
+  border: 1px solid #c4c4c4;
+  color: colors.$color-primary;
+  font-weight: 500;
+  padding: 1px 8px;
+
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  .tagName {
+    margin-left: 2px;
+    text-transform: capitalize;
+  }
+
+  &.active {
+    color: white;
+    background-color: colors.$color-primary;
+  }
+}

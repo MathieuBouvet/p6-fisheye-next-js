@@ -1,0 +1,20 @@
+@use "/styles/mixins/mediaQuery";
+
+.main {
+  margin-top: 35px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 35px;
+}
+
+@include mediaQuery.screen(sm) {
+  .main {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@include mediaQuery.screen(md) {
+  .main {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

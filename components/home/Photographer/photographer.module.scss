@@ -1,0 +1,58 @@
+@use "/styles/constants/colors";
+@use "/styles/mixins/shadow";
+
+.photographer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .photographerLink {
+    &:hover,
+    &:focus {
+      .profilePic {
+        transform: scale(1.07);
+      }
+    }
+  }
+
+  .imageWrapper {
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+    max-width: 350px;
+    aspect-ratio: 1;
+    @include shadow.light-shadow();
+  }
+
+  .profilePic {
+    transition: transform 0.2s ease;
+  }
+
+  .title {
+    color: colors.$color-secondary;
+    font-size: 2.2rem;
+    font-weight: normal;
+    margin-bottom: 0;
+  }
+
+  .infos {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .location {
+    color: colors.$color-primary;
+  }
+
+  .price {
+    color: colors.$color-muted;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+}
