@@ -10,11 +10,11 @@ interface Props {
 const TagLink = ({ children }: Props) => {
   const router = useRouter();
 
-  const tagPath = `/?tag=${children}`;
+  const tagPath = `/${children}`;
   const isActive = router.asPath === tagPath;
 
   return (
-    <Link href={isActive ? "/" : tagPath} shallow>
+    <Link href={isActive ? "/" : tagPath}>
       <a>
         <Tag isActive={isActive}>{children}</Tag>
       </a>

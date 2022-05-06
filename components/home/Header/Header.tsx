@@ -14,7 +14,7 @@ interface Props {
 const Header = ({ tags }: Props) => {
   return (
     <header className={styles.header}>
-      <Link href="/" shallow>
+      <Link href="/">
         <a className={styles.logo}>
           <AppLogo />
         </a>
