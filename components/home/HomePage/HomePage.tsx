@@ -1,3 +1,4 @@
+import cx from "classnames";
 import { useRouter } from "next/router";
 
 import { Tag } from "@prisma/client";
@@ -26,9 +27,10 @@ const HomePage = ({ tags, photographers }: Props) => {
             <Photographer
               key={photographer.id}
               photographer={photographer}
-              isVisible={
-                tagQueried == null || photographer.tags.includes(tagQueried)
-              }
+              className={cx({
+                hidden:
+                  tagQueried != null && !photographer.tags.includes(tagQueried),
+              })}
             />
           );
         })}

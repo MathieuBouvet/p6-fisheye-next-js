@@ -4,9 +4,21 @@
 
 .photographerCard {
   display: grid;
-  grid-template-columns: 1fr 100px;
-  gap: 25px;
+  grid-template-columns: 1fr fit-content(100px);
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "infos pic"
+    "tags tags";
+
+  column-gap: 25px;
+  row-gap: 15px;
   align-content: flex-start;
+
+  .infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
   .title {
     color: colors.$color-secondary;
@@ -16,6 +28,7 @@
   }
 
   .infos {
+    grid-area: infos;
     display: flex;
     flex-direction: column;
   }
@@ -28,17 +41,12 @@
     color: colors.$color-muted;
   }
 
-  .imageWrapper {
-    border-radius: 50%;
-    overflow: hidden;
-    margin: auto;
-    max-width: 350px;
-    aspect-ratio: 1;
-    @include shadow.light-shadow();
+  .profilePic {
+    grid-area: pic;
   }
 
   .contactButtonContainer {
-    position: absolute;
+    position: fixed;
     top: calc(100vh - 50px);
     bottom: 0;
     left: 0;
@@ -46,6 +54,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
   }
 
   .contactButton {
@@ -63,16 +72,36 @@
       background-color: lighten(colors.$color-primary, 5);
     }
   }
+
+  .tags {
+    grid-area: tags;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
 }
+
+.mediaContainer {
+  margin-top: 25px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 
 @include mediaQuery.screen(md) {
   .photographerCard {
-    grid-template-columns: auto 1fr 150px;
+    grid-template-columns: auto minmax(185px, 1fr) fit-content(150px);
+    grid-template-areas:
+      "infos button pic"
+      "tags tags pic";
     background-color: #fafafa;
     border-radius: 5px;
     padding: 25px;
 
     .contactButtonContainer {
+      grid-area: button;
       position: static;
       display: block;
     }

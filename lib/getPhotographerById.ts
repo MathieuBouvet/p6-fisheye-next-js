@@ -1,6 +1,8 @@
 import prisma from "@lib/prisma";
 
-export type PhotographerData = NonNullable<Awaited<ReturnType<typeof getPhotographerById>>>; 
+export type PhotographerData = NonNullable<
+  Awaited<ReturnType<typeof getPhotographerById>>
+>;
 
 async function getPhotographerById(id: number) {
   const photographer = await prisma.photographer.findUnique({
@@ -14,7 +16,15 @@ async function getPhotographerById(id: number) {
           profilePicUrl: true,
         },
       },
-      media: true,
+      media: {
+        include: {
+          tags: {
+            include: {
+              tag: true,
+            },
+          },
+        },
+      },
     },
     where: {
       id,
@@ -32,6 +42,7 @@ async function getPhotographerById(id: number) {
     media: media.map(medium => {
       return {
         ...medium,
+        tags: medium.tags.map(tag => tag.tag.name),
         createdAt: medium.createdAt.getTime(),
       };
     }),

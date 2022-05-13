@@ -1,13 +1,16 @@
 import { InferGetStaticPropsType, GetStaticPaths, GetStaticProps } from "next";
+
 import getPhotographers from "@lib/getPhotographers";
 import getPhotographerById from "@lib/getPhotographerById";
+import getMediaTagsForPhotographer from "@lib/getMediaTagsForPhotographer";
 
 import PhotographerPageComponent from "@components/photographer/PhotographerPage";
 
 const PhotographerPage = ({
   photographer,
+  tags,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  return <PhotographerPageComponent photographer={photographer} />;
+  return <PhotographerPageComponent photographer={photographer} tags={tags} />;
 };
 
 const getStaticPaths: GetStaticPaths = async () => {
@@ -22,7 +25,10 @@ const getStaticPaths: GetStaticPaths = async () => {
 
 const getStaticProps: GetStaticProps = async context => {
   const id = context.params?.id?.toString();
-  const photographer = await getPhotographerById(Number(id));
+  const [photographer, tags] = await Promise.all([
+    getPhotographerById(Number(id)),
+    getMediaTagsForPhotographer(Number(id)),
+  ]);
 
   if (photographer == null) {
     return {
@@ -30,7 +36,7 @@ const getStaticProps: GetStaticProps = async context => {
     };
   }
 
-  return { props: { photographer } };
+  return { props: { photographer, tags } };
 };
 
 export default PhotographerPage;

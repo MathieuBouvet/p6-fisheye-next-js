@@ -9,7 +9,7 @@ import styles from "./photographer.module.scss";
 
 interface Props {
   photographer: PhotographerProfile;
-  isVisible?: boolean;
+  className?: string;
 }
 
 const Photographer = ({
@@ -25,12 +25,10 @@ const Photographer = ({
     profilePicDominantColor,
     tags,
   },
-  isVisible = true,
+  className,
 }: Props) => {
   return (
-    <section
-      className={cx(styles.photographer, { [styles.hidden]: !isVisible })}
-    >
+    <section className={cx(styles.photographer, className)}>
       <Link href={`/photographer/${id}`}>
         <a className={styles.photographerLink}>
           <figure>

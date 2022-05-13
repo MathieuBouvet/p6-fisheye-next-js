@@ -4,17 +4,18 @@ import { useRouter } from "next/router";
 import Tag from "@components/common/Tag";
 
 interface Props {
+  basePath?: string;
   children: string;
 }
 
-const TagLink = ({ children }: Props) => {
+const TagLink = ({ children, basePath = "/" }: Props) => {
   const router = useRouter();
 
-  const tagPath = `/?tag=${children}`;
+  const tagPath = `${basePath}?tag=${children}`;
   const isActive = router.asPath === tagPath;
 
   return (
-    <Link href={isActive ? "/" : tagPath} shallow>
+    <Link href={isActive ? basePath : tagPath} shallow>
       <a>
         <Tag isActive={isActive}>{children}</Tag>
       </a>

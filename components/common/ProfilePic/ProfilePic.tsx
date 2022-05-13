@@ -1,3 +1,4 @@
+import cx from "classnames";
 import Image from "next/image";
 
 import styles from "./profilePic.module.scss";
@@ -6,13 +7,20 @@ interface Props {
   size: number;
   dominantColor: string | null;
   url: string | null;
+  className?: string;
   imageClassName?: string;
 }
 
-const ProfilePic = ({ size, dominantColor, url, imageClassName }: Props) => {
+const ProfilePic = ({
+  size,
+  dominantColor,
+  url,
+  imageClassName,
+  className,
+}: Props) => {
   return (
     <div
-      className={styles.imageWrapper}
+      className={cx(styles.imageWrapper, className)}
       style={{ backgroundColor: `#${dominantColor}`, maxWidth: size }}
     >
       <Image
