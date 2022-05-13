@@ -1,0 +1,84 @@
+@use "/styles/constants/colors";
+@use "/styles/mixins/shadow";
+@use "/styles/mixins/mediaQuery";
+
+.photographerCard {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  gap: 25px;
+  align-content: flex-start;
+
+  .title {
+    color: colors.$color-secondary;
+    font-size: 2.2rem;
+    font-weight: normal;
+    margin: 0;
+  }
+
+  .infos {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .location {
+    color: colors.$color-primary;
+  }
+
+  .tagLine {
+    color: colors.$color-muted;
+  }
+
+  .imageWrapper {
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+    max-width: 350px;
+    aspect-ratio: 1;
+    @include shadow.light-shadow();
+  }
+
+  .contactButtonContainer {
+    position: absolute;
+    top: calc(100vh - 50px);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contactButton {
+    border-radius: 4px;
+    background-color: colors.$color-primary;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-family: inherit;
+    padding: 5px 18px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: lighten(colors.$color-primary, 5);
+    }
+  }
+}
+
+@include mediaQuery.screen(md) {
+  .photographerCard {
+    grid-template-columns: auto 1fr 150px;
+    background-color: #fafafa;
+    border-radius: 5px;
+    padding: 25px;
+
+    .contactButtonContainer {
+      position: static;
+      display: block;
+    }
+
+    .contactButton {
+      padding: 12px 18px;
+    }
+  }
+}

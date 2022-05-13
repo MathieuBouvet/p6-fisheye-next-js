@@ -1,9 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
 import cx from "classnames";
 
 import { PhotographerProfile } from "@lib/getPhotographers";
 import TagLink from "@components/common/TagLink";
+import ProfilePic from "@components/common/ProfilePic";
 
 import styles from "./photographer.module.scss";
 
@@ -34,22 +34,12 @@ const Photographer = ({
       <Link href={`/photographer/${id}`}>
         <a className={styles.photographerLink}>
           <figure>
-            <div
-              className={styles.imageWrapper}
-              style={{ backgroundColor: `#${profilePicDominantColor}` }}
-            >
-              <Image
-                src={`/profile-pics/${profilePicUrl}`}
-                alt=""
-                className={styles.profilePic}
-                layout="intrinsic"
-                width={350}
-                height={350}
-                objectFit="cover"
-                placeholder="blur"
-                blurDataURL={`/profile-pics/placeholders/${profilePicUrl}`}
-              />
-            </div>
+            <ProfilePic
+              size={350}
+              dominantColor={profilePicDominantColor}
+              url={profilePicUrl}
+              imageClassName={styles.profilePic}
+            />
             <figcaption>
               <h2 className={styles.title}>
                 {firstName} {lastName}

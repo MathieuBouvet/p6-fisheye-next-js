@@ -1,0 +1,9 @@
+@use "/styles/mixins/shadow";
+
+.imageWrapper {
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+  aspect-ratio: 1;
+  @include shadow.light-shadow();
+}
