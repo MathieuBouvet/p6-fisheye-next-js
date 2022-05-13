@@ -7,6 +7,10 @@
   flex-direction: column;
   gap: 5px;
 
+  &.hidden {
+    display: none;
+  }
+
   .photographerLink {
     &:hover,
     &:focus {

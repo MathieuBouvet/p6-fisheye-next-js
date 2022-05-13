@@ -17,20 +17,19 @@ const HomePage = ({ tags, photographers }: Props) => {
   const router = useRouter();
   const tagQueried = router.query.tag?.toString();
 
-  const filteredPhotographers =
-    tagQueried == null
-      ? photographers
-      : photographers.filter(photographer =>
-          photographer.tags.includes(tagQueried)
-        );
-
   return (
     <div className="app">
       <Header tags={tags} />
       <main className={styles.main}>
-        {filteredPhotographers.map(photographer => {
+        {photographers.map(photographer => {
           return (
-            <Photographer key={photographer.id} photographer={photographer} />
+            <Photographer
+              key={photographer.id}
+              photographer={photographer}
+              isVisible={
+                tagQueried == null || photographer.tags.includes(tagQueried)
+              }
+            />
           );
         })}
       </main>

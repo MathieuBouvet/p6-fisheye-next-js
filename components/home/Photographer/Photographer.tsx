@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import cx from "classnames";
 
 import { PhotographerProfile } from "@lib/getPhotographers";
 import TagLink from "@components/common/TagLink";
@@ -8,6 +9,7 @@ import styles from "./photographer.module.scss";
 
 interface Props {
   photographer: PhotographerProfile;
+  isVisible?: boolean;
 }
 
 const Photographer = ({
@@ -23,9 +25,12 @@ const Photographer = ({
     profilePicDominantColor,
     tags,
   },
+  isVisible = true,
 }: Props) => {
   return (
-    <section className={styles.photographer}>
+    <section
+      className={cx(styles.photographer, { [styles.hidden]: !isVisible })}
+    >
       <Link href={`/photographer/${id}`}>
         <a className={styles.photographerLink}>
           <figure>
