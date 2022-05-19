@@ -81,7 +81,7 @@ model MediumTag {
 
 model Visitor {
   id          Int    @id @default(autoincrement())
-  ipv4Address Int    @db.UnsignedInt
+  ipv4Address Int    @db.UnsignedInt @unique
   likes       Like[]
 }
 

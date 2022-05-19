@@ -7,9 +7,24 @@ import {
   profilePicDominantColor,
 } from "./seedData";
 
+const ipStart = 2130706434; //127.0.0.1
+function range(start: number, size: number): number[] {
+  const range = [];
+  for (let i = start; i < start + size; i++) {
+    range.push(i);
+  }
+  return range;
+}
+
 const prisma = new PrismaClient();
 
 async function main() {
+  const ipRange = range(ipStart, 200);
+
+  await prisma.visitor.createMany({
+    data: ipRange.map(ipv4Address => ({ ipv4Address })),
+  });
+
   for (const photographer of photographers) {
     const {
       city,
@@ -83,7 +98,7 @@ async function main() {
         )
       );
 
-      await prisma.medium.create({
+      const mediumInstance = await prisma.medium.create({
         data: {
           title,
           type: video != null ? "VIDEO" : "PICTURE",
@@ -108,6 +123,25 @@ async function main() {
           },
         },
       });
+
+      const likeCreationPromises = range(ipStart, photographerMedium.likes).map(
+        ip =>
+          prisma.like.create({
+            data: {
+              visitor: {
+                connect: {
+                  ipv4Address: ip,
+                },
+              },
+              medium: {
+                connect: {
+                  id: mediumInstance.id,
+                },
+              },
+            },
+          })
+      );
+      await Promise.all(likeCreationPromises);
     }
   }
 }
