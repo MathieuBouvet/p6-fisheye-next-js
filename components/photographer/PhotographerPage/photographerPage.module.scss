@@ -84,11 +84,10 @@
 .mediaContainer {
   margin-top: 25px;
   margin-bottom: 50px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
-
 
 @include mediaQuery.screen(md) {
   .photographerCard {
@@ -109,5 +108,9 @@
     .contactButton {
       padding: 12px 18px;
     }
+  }
+
+  .mediaContainer {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   }
 }

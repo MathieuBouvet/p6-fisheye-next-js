@@ -31,12 +31,15 @@ const Picture = ({
           src={`/media/${url}`}
           alt={altText}
           objectFit="cover"
+          sizes="(max-width: 584px) 100vw, (max-width: 1124px) 50vw, 33vw"
         />
       </div>
       <figcaption className={styles.caption}>
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.likes}>{likes}</p>
-        <button className={styles.likeButton}><i className="far fa-heart"></i></button>
+        <button className={styles.likeButton}>
+          <i className="far fa-heart"></i>
+        </button>
       </figcaption>
     </figure>
   );
