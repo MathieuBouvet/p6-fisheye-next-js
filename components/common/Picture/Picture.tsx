@@ -8,10 +8,18 @@ interface Props {
   url: string;
   altText: string;
   dominantColor: string;
+  likes: number;
   className?: string;
 }
 
-const Picture = ({ title, url, altText, dominantColor, className }: Props) => {
+const Picture = ({
+  title,
+  url,
+  altText,
+  dominantColor,
+  likes,
+  className,
+}: Props) => {
   return (
     <figure className={cx(styles.picture, className)}>
       <div
@@ -27,7 +35,8 @@ const Picture = ({ title, url, altText, dominantColor, className }: Props) => {
       </div>
       <figcaption className={styles.caption}>
         <h2 className={styles.title}>{title}</h2>
-        <p className={styles.likes}></p>
+        <p className={styles.likes}>{likes}</p>
+        <button className={styles.likeButton}><i className="far fa-heart"></i></button>
       </figcaption>
     </figure>
   );

@@ -76,6 +76,7 @@ const PhotographerPage = ({
                 url={medium.url}
                 altText={medium.altText ?? ""}
                 dominantColor={medium.dominantColor ?? ""}
+                likes={medium.likes}
                 className={cx({
                   hidden:
                     tagQueried != null && !medium.tags.includes(tagQueried),

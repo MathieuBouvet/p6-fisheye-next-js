@@ -8,6 +8,11 @@ const Document = () => {
           href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap"
           rel="stylesheet"
         />
+        <script
+          async
+          src="https://kit.fontawesome.com/7bacb14bca.js"
+          crossOrigin="anonymous"
+        ></script>
       </Head>
       <body>
         <Main />

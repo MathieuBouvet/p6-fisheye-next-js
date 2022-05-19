@@ -23,6 +23,11 @@ async function getPhotographerById(id: number) {
               tag: true,
             },
           },
+          likes: {
+            select: {
+              visitorId: true,
+            },
+          },
         },
       },
     },
@@ -39,11 +44,12 @@ async function getPhotographerById(id: number) {
   return {
     ...rest,
     ...user,
-    media: media.map(medium => {
+    media: media.map(({ likes, ...medium }) => {
       return {
         ...medium,
         tags: medium.tags.map(tag => tag.tag.name),
         createdAt: medium.createdAt.getTime(),
+        likes: likes.length,
       };
     }),
   };
