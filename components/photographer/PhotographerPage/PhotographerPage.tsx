@@ -1,8 +1,9 @@
 import cx from "classnames";
-
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 import { PhotographerData } from "@lib/getPhotographerById";
+import mediaSort, { SortType, isSortType } from "@lib/mediaSort";
 
 import Header from "@components/photographer/Header";
 import ProfilePic from "@components/common/ProfilePic";
@@ -32,6 +33,11 @@ const PhotographerPage = ({
 }: Props) => {
   const router = useRouter();
   const tagQueried = router.query.tag?.toString();
+
+  const [sortBy, setSortBy] = useState<SortType>("date");
+  const currentSortFn = mediaSort[sortBy].sortFn;
+
+  media.sort(currentSortFn);
 
   return (
     <div className="app">
@@ -64,6 +70,23 @@ const PhotographerPage = ({
             ))}
           </div>
         </section>
+        <label htmlFor="sort-media" className={styles.sortSelectorLabel}>
+          Trier par{" "}
+        </label>
+        <select
+          id="sort-media"
+          className={styles.sortSelector}
+          value={sortBy}
+          onChange={({ target: { value } }) =>
+            isSortType(value) && setSortBy(value)
+          }
+        >
+          {Object.entries(mediaSort).map(([type, { label }]) => (
+            <option key={type} value={type}>
+              {label}
+            </option>
+          ))}
+        </select>
         <section className={styles.mediaContainer}>
           {media.map(medium => {
             if (medium.type === "VIDEO") {

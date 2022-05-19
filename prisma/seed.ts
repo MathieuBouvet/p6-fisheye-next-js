@@ -83,8 +83,17 @@ async function main() {
     );
 
     for (const photographerMedium of photographerMedia) {
-      const { id, tags, title, image, video, price, altText, photographerId } =
-        photographerMedium;
+      const {
+        id,
+        tags,
+        title,
+        image,
+        video,
+        price,
+        altText,
+        photographerId,
+        date,
+      } = photographerMedium;
 
       await Promise.all(
         tags.map(tag =>
@@ -105,6 +114,7 @@ async function main() {
           url: video != null ? video : image,
           dominantColor:
             pictureDominantColor[`p${photographerId}_${id}`].slice(1),
+          createdAt: new Date(date),
           altText,
           price,
           tags: {
