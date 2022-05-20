@@ -8,7 +8,7 @@ import mediaSort, { SortType, isSortType } from "@lib/mediaSort";
 import Header from "@components/photographer/Header";
 import ProfilePic from "@components/common/ProfilePic";
 import TagLink from "@components/common/TagLink";
-import Picture from "@components/common/Picture";
+import Medium from "@components/common/Medium";
 
 import styles from "./photographerPage.module.scss";
 
@@ -89,17 +89,15 @@ const PhotographerPage = ({
         </select>
         <section className={styles.mediaContainer}>
           {media.map(medium => {
-            if (medium.type === "VIDEO") {
-              return null;
-            }
             return (
-              <Picture
+              <Medium
                 key={medium.id}
                 title={medium.title}
                 url={medium.url}
                 altText={medium.altText ?? ""}
                 dominantColor={medium.dominantColor ?? ""}
                 likes={medium.likes}
+                type={medium.type}
                 className={cx({
                   hidden:
                     tagQueried != null && !medium.tags.includes(tagQueried),
