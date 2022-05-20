@@ -8,7 +8,7 @@ import mediaSort, { SortType, isSortType } from "@lib/mediaSort";
 import Header from "@components/photographer/Header";
 import ProfilePic from "@components/common/ProfilePic";
 import TagLink from "@components/common/TagLink";
-import Medium from "@components/common/Medium";
+import Medium from "@components/photographer/Medium";
 
 import styles from "./photographerPage.module.scss";
 
