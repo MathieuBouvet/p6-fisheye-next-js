@@ -21,6 +21,7 @@
       "@styles/*": ["styles/*"],
       "@components/*": ["components/*"],
       "@utils/*": ["utils/*"],
+      "@hooks/*": ["hooks/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/_document.js"],
