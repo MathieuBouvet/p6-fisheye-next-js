@@ -5,10 +5,13 @@ import { useState } from "react";
 import { PhotographerData } from "@lib/getPhotographerById";
 import mediaSort, { SortType, isSortType } from "@lib/mediaSort";
 
+import usePresence from "@hooks/usePresence";
+
 import Header from "@components/photographer/Header";
 import ProfilePic from "@components/common/ProfilePic";
 import TagLink from "@components/common/TagLink";
 import Medium from "@components/photographer/Medium";
+import ContactModal from "@components/photographer/ContactModal";
 
 import styles from "./photographerPage.module.scss";
 
@@ -37,6 +40,8 @@ const PhotographerPage = ({
   const [sortBy, setSortBy] = useState<SortType>("date");
   const currentSortFn = mediaSort[sortBy].sortFn;
 
+  const contactModal = usePresence();
+
   media.sort(currentSortFn);
 
   return (
@@ -54,7 +59,12 @@ const PhotographerPage = ({
             <p className={styles.tagLine}>{tagLine}</p>
           </div>
           <div className={styles.contactButtonContainer}>
-            <button className={styles.contactButton}>Contactez-moi</button>
+            <button
+              className={styles.contactButton}
+              onClick={contactModal.setPresent}
+            >
+              Contactez-moi
+            </button>
           </div>
           <ProfilePic
             size={200}
@@ -107,6 +117,14 @@ const PhotographerPage = ({
           })}
         </section>
       </main>
+      {contactModal.isVisible && (
+        <ContactModal
+          photographerName={`${firstName} ${lastName}`}
+          isClosing={contactModal.isVanishing}
+          onCloseFinished={contactModal.setAbsent}
+          onCloseStarted={contactModal.setVanishing}
+        />
+      )}
     </div>
   );
 };

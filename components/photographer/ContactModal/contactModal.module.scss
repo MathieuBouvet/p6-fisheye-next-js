@@ -1,0 +1,149 @@
+@use "/styles/constants/colors";
+@use "/styles/constants/animations";
+@use "/styles/mixins/mediaQuery";
+@use "/styles/mixins/shadow";
+
+.overlay {
+  background-color: transparent;
+}
+
+.contactModal {
+  background-color: colors.$color-foundation;
+  height: 100vh;
+  width: 100vw;
+  padding: 15px 35px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 25px;
+}
+
+.formContainer {
+  margin-top: 15px;
+  flex-grow: 1;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: normal;
+}
+
+.name {
+  white-space: nowrap;
+}
+
+.closeButton {
+  border: none;
+  background-color: transparent;
+  font-size: 1.7rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 7px;
+}
+
+.contactForm {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: 15px;
+
+  label,
+  input,
+  textarea {
+    width: 100%;
+    display: block;
+  }
+
+  input,
+  textarea {
+    border-radius: 4px;
+    margin-top: 5px;
+    border: none;
+    padding: 5px 8px;
+    font-size: 1rem;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  label {
+    color: colors.$color-text-lighter;
+    font-size: 1.2rem;
+  }
+
+  input {
+    height: 35px;
+  }
+
+  .messageInputGroup {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+}
+
+.submitButton {
+  justify-self: center;
+  margin-top: auto;
+  border: none;
+  background-color: colors.$color-primary;
+  border-radius: 4px;
+  color: white;
+  padding: 8px 16px;
+  font-size: 1.2rem;
+}
+
+.contentClosing {
+  animation: slide-out 0.2s forwards;
+}
+
+.contentEntering {
+  animation: slide-in 0.2s forwards;
+}
+
+.overlayEntering,
+.overlayClosing {
+  animation: none;
+}
+
+@include mediaQuery.screen(md) {
+  .overlay {
+    background-color: colors.$color-overlay;
+  }
+
+  .contactModal {
+    max-width: 600px;
+    max-height: 750px;
+    border-radius: 4px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    @include shadow.light-shadow();
+  }
+
+  .overlayEntering {
+    animation: appear 0.3s forwards;
+  }
+
+  .overlayClosing {
+    animation: disappear 0.3s forwards;
+  }
+
+  .contentEntering {
+    animation: pop-in 0.3s forwards;
+  }
+
+  .contentClosing {
+    animation: pop-out 0.3s forwards;
+  }
+}
