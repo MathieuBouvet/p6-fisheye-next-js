@@ -6,12 +6,14 @@ import { PhotographerData } from "@lib/getPhotographerById";
 import mediaSort, { SortType, isSortType } from "@lib/mediaSort";
 
 import usePresence from "@hooks/usePresence";
+import useBooleanHashMap from "@hooks/useBooleanHashMap";
 
 import Header from "@components/photographer/Header";
 import ProfilePic from "@components/common/ProfilePic";
 import TagLink from "@components/common/TagLink";
 import Medium from "@components/photographer/Medium";
 import ContactModal from "@components/photographer/ContactModal";
+import ProgressBar from "@components/common/ProgressBar";
 
 import styles from "./photographerPage.module.scss";
 
@@ -37,6 +39,27 @@ const PhotographerPage = ({
   const router = useRouter();
   const tagQueried = router.query.tag?.toString();
 
+  const [mediaLoadingState, setIsMediumLoaded] = useBooleanHashMap(
+    media.map(medium => [medium.id, false])
+  );
+
+  const mediaIdsMatchingTagQueried = media.reduce((acc, medium) => {
+    if (tagQueried == null || medium.tags.includes(tagQueried)) {
+      acc[medium.id] = true;
+    }
+    return acc;
+  }, {} as Record<number, true>);
+
+  const nbOfLoadedMedia = Object.entries(mediaLoadingState).reduce(
+    (acc, [mediumId, isLoaded]) => {
+      if (mediaIdsMatchingTagQueried[Number(mediumId)] && isLoaded) {
+        return acc + 1;
+      }
+      return acc;
+    },
+    0
+  );
+
   const [sortBy, setSortBy] = useState<SortType>("date");
   const currentSortFn = mediaSort[sortBy].sortFn;
 
@@ -48,6 +71,10 @@ const PhotographerPage = ({
     <div className="app">
       <Header />
       <main>
+        <ProgressBar
+          value={nbOfLoadedMedia}
+          max={Object.values(mediaIdsMatchingTagQueried).length}
+        />
         <section className={styles.photographerCard}>
           <div className={styles.infos}>
             <h1 className={styles.title}>
@@ -109,9 +136,9 @@ const PhotographerPage = ({
                 likes={medium.likes}
                 type={medium.type}
                 className={cx({
-                  hidden:
-                    tagQueried != null && !medium.tags.includes(tagQueried),
+                  hidden: mediaIdsMatchingTagQueried[medium.id] == null,
                 })}
+                onLoadingComplete={() => setIsMediumLoaded(medium.id, true)}
               />
             );
           })}

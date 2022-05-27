@@ -60,3 +60,9 @@
     transform: translateY(0);
   }
 }
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}

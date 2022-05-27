@@ -10,6 +10,7 @@ interface Props {
   dominantColor: string;
   likes: number;
   type: "VIDEO" | "PICTURE";
+  onLoadingComplete: () => void;
   className?: string;
 }
 
@@ -20,6 +21,7 @@ const Medium = ({
   dominantColor,
   likes,
   type,
+  onLoadingComplete,
   className,
 }: Props) => {
   return (
@@ -35,10 +37,19 @@ const Medium = ({
             alt={altText}
             objectFit="cover"
             sizes="(max-width: 584px) 100vw, (max-width: 1124px) 50vw, 33vw"
+            onLoadingComplete={onLoadingComplete}
           />
         ) : (
           <>
-            <video className={styles.video}>
+            <video
+              ref={ref => {
+                if (ref != null && ref.readyState >= 2) {
+                  onLoadingComplete();
+                }
+              }}
+              className={styles.video}
+              onLoadedData={onLoadingComplete}
+            >
               <source src={`/media/${url}`} />
               <p>{altText}</p>
             </video>
