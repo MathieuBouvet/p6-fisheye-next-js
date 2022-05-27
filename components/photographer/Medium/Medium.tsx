@@ -38,6 +38,8 @@ const Medium = ({
             objectFit="cover"
             sizes="(max-width: 584px) 100vw, (max-width: 1124px) 50vw, 33vw"
             onLoadingComplete={onLoadingComplete}
+            placeholder="blur"
+            blurDataURL={`/media/placeholders/${url}`}
           />
         ) : (
           <>
