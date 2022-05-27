@@ -1,0 +1,133 @@
+@use "/styles/constants/colors";
+@use "/styles/constants/animations";
+@use "/styles/mixins/mediaQuery";
+@use "/styles/mixins/shadow";
+
+.overlay {
+  background-color: transparent;
+}
+
+.lightBox {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "left medium right";
+  grid-template-rows: 1fr;
+  background-color: white;
+  padding: 25px 0;
+  max-width: 1024px;
+  max-height: 900px;
+
+  .medium {
+    grid-area: medium;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    overflow: hidden;
+
+    figcaption {
+      color: colors.$color-primary;
+      font-weight: 400;
+      font-size: 1.5rem;
+    }
+  }
+
+  .video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .button {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    color: colors.$color-primary;
+    cursor: pointer;
+    padding: 15px;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: lighten(colors.$color-primary, 10%);
+    }
+  }
+
+  .closeButton {
+    position: absolute;
+    top: -15px;
+    right: 0;
+    grid-area: right;
+  }
+
+  .leftButton {
+    grid-area: left;
+    align-self: center;
+  }
+
+  .rightButtons {
+    grid-area: right;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .imageWrapper {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    transition: background-color ease 0.2s;
+    border-radius: 5px;
+    overflow: hidden;
+
+    .image {
+      background-repeat: no-repeat;
+      background-position: center !important;
+    }
+
+    .fadeIn {
+      animation: fadeIn 5s ease forwards;
+    }
+  }
+}
+
+.contentClosing {
+  animation: slide-out 0.2s forwards;
+}
+
+.contentEntering {
+  animation: slide-in 0.2s forwards;
+}
+
+.overlayEntering,
+.overlayClosing {
+  animation: none;
+}
+
+@include mediaQuery.screen(md) {
+  .overlay {
+    background-color: colors.$color-overlay;
+  }
+
+  .lightBox {
+    border-radius: 5px;
+    @include shadow.light-shadow();
+  }
+
+  .overlayEntering {
+    animation: appear 0.3s forwards;
+  }
+
+  .overlayClosing {
+    animation: disappear 0.3s forwards;
+  }
+
+  .contentEntering {
+    animation: pop-in 0.3s forwards;
+  }
+
+  .contentClosing {
+    animation: pop-out 0.3s forwards;
+  }
+}

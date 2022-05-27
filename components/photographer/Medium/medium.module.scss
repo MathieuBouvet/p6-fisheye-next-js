@@ -2,6 +2,10 @@
 @use "/styles/mixins/mediaQuery";
 
 .medium {
+  .mediumLink {
+    cursor: pointer;
+  }
+
   .wrapper {
     position: relative;
     width: 100%;

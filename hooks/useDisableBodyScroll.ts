@@ -7,7 +7,7 @@ function useDisableBodyScroll() {
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  });
+  }, []);
 }
 
 export default useDisableBodyScroll;

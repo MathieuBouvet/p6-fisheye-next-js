@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import { PhotographerData } from "@lib/getPhotographerById";
 import mediaSort, { SortType, isSortType } from "@lib/mediaSort";
@@ -14,6 +14,7 @@ import TagLink from "@components/common/TagLink";
 import Medium from "@components/photographer/Medium";
 import ContactModal from "@components/photographer/ContactModal";
 import ProgressBar from "@components/common/ProgressBar";
+import LightBox from "@components/photographer/LightBox";
 
 import styles from "./photographerPage.module.scss";
 
@@ -64,6 +65,8 @@ const PhotographerPage = ({
   const currentSortFn = mediaSort[sortBy].sortFn;
 
   const contactModal = usePresence();
+  const lighbox = usePresence();
+  const initialLIghtBoxMedium = useRef(0);
 
   media.sort(currentSortFn);
 
@@ -139,6 +142,10 @@ const PhotographerPage = ({
                   hidden: mediaIdsMatchingTagQueried[medium.id] == null,
                 })}
                 onLoadingComplete={() => setIsMediumLoaded(medium.id, true)}
+                onMediaClick={() => {
+                  initialLIghtBoxMedium.current = medium.id;
+                  lighbox.setPresent();
+                }}
               />
             );
           })}
@@ -150,6 +157,15 @@ const PhotographerPage = ({
           isClosing={contactModal.isVanishing}
           onCloseFinished={contactModal.setAbsent}
           onCloseStarted={contactModal.setVanishing}
+        />
+      )}
+      {lighbox.isVisible && (
+        <LightBox
+          inititalMedium={initialLIghtBoxMedium.current}
+          media={media.filter(medium => mediaIdsMatchingTagQueried[medium.id])}
+          isClosing={lighbox.isVanishing}
+          onCloseFinished={lighbox.setAbsent}
+          onCloseStarted={lighbox.setVanishing}
         />
       )}
     </div>
