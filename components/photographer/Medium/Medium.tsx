@@ -13,6 +13,7 @@ interface Props {
   onLoadingComplete: () => void;
   className?: string;
   onMediaClick: () => void;
+  isLiked: boolean;
 }
 
 const Medium = ({
@@ -25,6 +26,7 @@ const Medium = ({
   onLoadingComplete,
   className,
   onMediaClick,
+  isLiked,
 }: Props) => {
   return (
     <figure className={cx(styles.medium, className)}>
@@ -69,7 +71,7 @@ const Medium = ({
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.likes}>{likes}</p>
         <button className={styles.likeButton}>
-          <i className="far fa-heart"></i>
+          <i className={`${isLiked ? "fas" : "far"} fa-heart`}></i>
         </button>
       </figcaption>
     </figure>

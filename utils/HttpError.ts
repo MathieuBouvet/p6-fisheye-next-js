@@ -1,4 +1,4 @@
-const messages: Record<number, string> = {
+const statuses: Record<number, string> = {
   400: "Bad Request",
   401: "Unauthorized",
   403: "Forbidden",
@@ -12,11 +12,13 @@ class HttpError extends Error {
   code: number;
   status: string;
 
-  constructor(code: number) {
-    const message = messages[code];
-    super(`${code}${message != null ? ` - ${message}` : ""}`);
+  constructor(code: number, message?: string) {
+    const status = statuses[code];
+    console.log(message);
+    super(`${message != null ? message : status}`);
+
     this.code = code;
-    this.status = message ?? "";
+    this.status = status ?? "";
   }
 }
 

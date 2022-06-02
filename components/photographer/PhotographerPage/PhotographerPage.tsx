@@ -7,6 +7,7 @@ import mediaSort, { SortType, isSortType } from "@lib/mediaSort";
 
 import usePresence from "@hooks/usePresence";
 import useBooleanHashMap from "@hooks/useBooleanHashMap";
+import useMyLikes from "@hooks/useMyLikes";
 
 import Header from "@components/photographer/Header";
 import ProfilePic from "@components/common/ProfilePic";
@@ -69,6 +70,8 @@ const PhotographerPage = ({
   const initialLIghtBoxMedium = useRef(0);
 
   media.sort(currentSortFn);
+
+  const myMediaLikes = useMyLikes(id);
 
   return (
     <div className="app">
@@ -146,6 +149,7 @@ const PhotographerPage = ({
                   initialLIghtBoxMedium.current = medium.id;
                   lighbox.setPresent();
                 }}
+                isLiked={myMediaLikes.data?.[medium.id] ?? false}
               />
             );
           })}

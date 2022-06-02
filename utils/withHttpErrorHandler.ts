@@ -9,7 +9,8 @@ function withHttpErrorHandler(handler: NextApiHandler): NextApiHandler {
       if (err instanceof HttpError) {
         res.status(err.code).json({
           code: err.code,
-          message: err.status,
+          status: err.status,
+          message: err.message,
         });
       } else {
         throw err;
