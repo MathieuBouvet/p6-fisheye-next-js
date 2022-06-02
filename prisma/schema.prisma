@@ -80,9 +80,9 @@ model MediumTag {
 }
 
 model Visitor {
-  id          Int    @id @default(autoincrement())
-  ipv4Address Int    @db.UnsignedInt @unique
-  likes       Like[]
+  id        Int    @id @default(autoincrement())
+  ipAddress String @unique @db.VarChar(255)
+  likes     Like[]
 }
 
 model Like {
