@@ -1,5 +1,5 @@
 import { ArrayUnwrap } from "../utils/typeUtils";
-import { PhotographerData } from "@lib/getPhotographerById";
+import { PhotographerData } from "@lib/model/getPhotographerById";
 
 type Medium = ArrayUnwrap<PhotographerData["media"]>;
 

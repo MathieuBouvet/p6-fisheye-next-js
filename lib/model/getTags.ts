@@ -1,4 +1,4 @@
-import prisma from "@lib/prisma";
+import prisma from "@lib/model/prisma";
 
 async function getTags() {
   return prisma.tag.findMany();

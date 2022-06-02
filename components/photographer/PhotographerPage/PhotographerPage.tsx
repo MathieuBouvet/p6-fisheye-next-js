@@ -2,7 +2,7 @@ import cx from "classnames";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
 
-import { PhotographerData } from "@lib/getPhotographerById";
+import { PhotographerData } from "@lib/model/getPhotographerById";
 import mediaSort, { SortType, isSortType } from "@lib/mediaSort";
 
 import usePresence from "@hooks/usePresence";

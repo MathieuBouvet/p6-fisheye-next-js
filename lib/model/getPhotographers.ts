@@ -1,4 +1,4 @@
-import prisma from "@lib/prisma";
+import prisma from "@lib/model/prisma";
 
 import type { ArrayUnwrap } from "@utils/typeUtils";
 

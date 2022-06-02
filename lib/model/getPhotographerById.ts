@@ -1,4 +1,4 @@
-import prisma from "@lib/prisma";
+import prisma from "@lib/model/prisma";
 
 export type PhotographerData = NonNullable<
   Awaited<ReturnType<typeof getPhotographerById>>
