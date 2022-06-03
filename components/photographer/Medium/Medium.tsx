@@ -13,7 +13,8 @@ interface Props {
   onLoadingComplete: () => void;
   className?: string;
   onMediaClick: () => void;
-  isLiked: boolean;
+  likeStatus: "liked" | "not-liked" | "loading";
+  onLikeClick: () => void;
 }
 
 const Medium = ({
@@ -26,8 +27,13 @@ const Medium = ({
   onLoadingComplete,
   className,
   onMediaClick,
-  isLiked,
+  likeStatus,
+  onLikeClick,
 }: Props) => {
+  const isLiked = likeStatus === "liked";
+  const isLikeLoading = likeStatus === "loading";
+
+  const effectiveLikes = likes + Number(isLiked)
   return (
     <figure className={cx(styles.medium, className)}>
       <a onClick={onMediaClick} className={styles.mediumLink}>
@@ -69,8 +75,14 @@ const Medium = ({
       </a>
       <figcaption className={styles.caption}>
         <h2 className={styles.title}>{title}</h2>
-        <p className={styles.likes}>{likes}</p>
-        <button className={styles.likeButton}>
+        <p className={styles.likes}>{effectiveLikes}</p>
+        <button
+          className={cx(styles.likeButton, {
+            [styles.isLoading]: isLikeLoading,
+          })}
+          onClick={onLikeClick}
+          title={isLikeLoading ? "Chargement du like" : ""}
+        >
           <i className={`${isLiked ? "fas" : "far"} fa-heart`}></i>
         </button>
       </figcaption>

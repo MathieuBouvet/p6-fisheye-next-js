@@ -73,6 +73,13 @@ const PhotographerPage = ({
 
   const myMediaLikes = useMyLikes(id);
 
+  function getLikeStatus(mediumId: number) {
+    if (myMediaLikes.data == null && myMediaLikes.error == null) {
+      return "loading";
+    }
+    return myMediaLikes.data?.[mediumId] ? "liked" : "not-liked";
+  }
+
   return (
     <div className="app">
       <Header />
@@ -149,7 +156,8 @@ const PhotographerPage = ({
                   initialLIghtBoxMedium.current = medium.id;
                   lighbox.setPresent();
                 }}
-                isLiked={myMediaLikes.data?.[medium.id] ?? false}
+                likeStatus={getLikeStatus(medium.id)}
+                onLikeClick={() => myMediaLikes.toggleLike(medium.id)}
               />
             );
           })}

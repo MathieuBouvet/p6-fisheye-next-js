@@ -18,7 +18,8 @@ async function send<T>({ route, body, options }: SendParams): Promise<T> {
   if (!res.ok) {
     throw res;
   }
-  return res.json() as Promise<T>;
+  const data = res.status === 204 ? {} : res.json();
+  return data as Promise<T>;
 }
 
 async function get<T>(route: string, options?: NoMethodOptions): Promise<T> {

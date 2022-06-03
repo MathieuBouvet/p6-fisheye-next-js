@@ -58,6 +58,10 @@ const likesController = controller({
     try {
       await likeMedium({ mediumId, visitorIp });
       res.status(201);
+      return {
+        visitorIp,
+        mediumId,
+      };
     } catch (err) {
       likeMediumErrorHandler(err, res, mediumId);
     }
