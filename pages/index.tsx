@@ -1,7 +1,7 @@
 import { InferGetStaticPropsType } from "next";
 
-import getPhotographers from "@lib/model/getPhotographers";
-import getTags from "@lib/model/getTags";
+import getPhotographers from "@lib/model/photographers/getPhotographers";
+import getTags from "@lib/model/tags/getTags";
 
 import HomePage from "@components/home/HomePage";
 

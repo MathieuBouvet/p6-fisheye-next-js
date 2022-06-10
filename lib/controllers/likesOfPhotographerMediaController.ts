@@ -8,7 +8,7 @@ import isRequired from "@lib/validators/isRequired";
 import isNotArray from "@lib/validators/isNotArray";
 import toInteger from "@lib/validators/toInteger";
 
-import getLikesOfPhotographerMedia from "@lib/model/getLikesOfPhotographerMedia";
+import getLikesOfPhotographerMedia from "@lib/model/likes/getLikesOfPhotographerMedia";
 
 const validatePhotographerId = validation(
   (field: NextQueryField) => toInteger(isNotArray(isRequired(field))),

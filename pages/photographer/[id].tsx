@@ -1,8 +1,8 @@
 import { InferGetStaticPropsType, GetStaticPaths, GetStaticProps } from "next";
 
-import getPhotographers from "@lib/model/getPhotographers";
-import getPhotographerById from "@lib/model/getPhotographerById";
-import getMediaTagsForPhotographer from "@lib/model/getMediaTagsForPhotographer";
+import getPhotographers from "@lib/model/photographers/getPhotographers";
+import getPhotographerById from "@lib/model/photographers/getPhotographerById";
+import getMediaTagsForPhotographer from "@lib/model/tags/getMediaTagsForPhotographer";
 
 import PhotographerPageComponent from "@components/photographer/PhotographerPage";
 

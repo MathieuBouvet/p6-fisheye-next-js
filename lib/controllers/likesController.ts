@@ -11,8 +11,8 @@ import isRequired from "@lib/validators/isRequired";
 import isNotArray from "@lib/validators/isNotArray";
 import toInteger from "@lib/validators/toInteger";
 
-import likeMedium from "@lib/model/likeMedium";
-import unlikeMedium from "@lib/model/unlikeMedium";
+import likeMedium from "@lib/model/likes/likeMedium";
+import unlikeMedium from "@lib/model/likes/unlikeMedium";
 
 const validateMediumId = validation(
   (field: NextQueryField) => toInteger(isNotArray(isRequired(field))),
