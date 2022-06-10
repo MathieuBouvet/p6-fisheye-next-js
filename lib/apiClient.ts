@@ -8,10 +8,12 @@ type SendParams = {
 };
 
 async function send<T>({ route, body, options }: SendParams): Promise<T> {
+  const csrfToken = window.localStorage.getItem("csrf_token");
   const res = await fetch(route, {
     ...options,
     headers: {
       "content-type": "application/json",
+      "x-csrf-token": csrfToken ?? "",
     },
     body: body != null ? JSON.stringify(body) : undefined,
   });
