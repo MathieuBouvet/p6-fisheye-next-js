@@ -1,4 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@lib/model/prisma";
+import createPhotographer from "@lib/model/photographers/createPhotographer";
 
 import {
   photographers,
@@ -16,8 +17,6 @@ function range(start: number, size: number): number[] {
 }
 
 const ipBase = "128.0.0.";
-
-const prisma = new PrismaClient();
 
 async function main() {
   const ipRange = range(1, 200).map(i => ipBase + i);
@@ -50,33 +49,17 @@ async function main() {
         })
       )
     );
-    const photographerInstance = await prisma.photographer.create({
-      data: {
-        city,
-        country,
-        tagLine,
-        price,
-        user: {
-          create: {
-            email: `${firstName}.${lastName}@fisheye.com`.toLowerCase(),
-            firstName,
-            lastName,
-            password: "",
-            profilePicDominantColor: profilePicDominantColor[`p${id}`].slice(1),
-            isAdmin: false,
-            profilePicUrl: portrait,
-          },
-        },
-        tags: {
-          create: tags.map(tag => ({
-            tag: {
-              connect: {
-                name: tag.toLowerCase(),
-              },
-            },
-          })),
-        },
-      },
+    const photographerInstance = await createPhotographer({
+      email: `${firstName}.${lastName}@fisheye.com`.toLowerCase(),
+      firstName,
+      lastName,
+      password: `pass_${firstName.toLowerCase()}_${lastName.toLowerCase()}`,
+      profilePicDominantColor: profilePicDominantColor[`p${id}`].slice(1),
+      profilePicUrl: portrait,
+      city,
+      country,
+      tagLine,
+      price,
     });
 
     const photographerMedia = media.filter(

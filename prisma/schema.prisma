@@ -16,6 +16,7 @@ model User {
   firstName               String
   lastName                String
   password                String
+  passwordSalt            String
   profilePicUrl           String?
   profilePicDominantColor String?       @default("FFFFFF") @db.Char(6)
   isAdmin                 Boolean
