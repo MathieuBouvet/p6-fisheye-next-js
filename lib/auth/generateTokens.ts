@@ -1,15 +1,18 @@
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { User } from "@prisma/client";
+import getUserRole from "@lib/model/users/getUserRole";
 
-function generateTokens(
+async function generateTokens(
   user: User
-): [authToken: string, csrfToken: string] {
+): Promise<[authToken: string, csrfToken: string]> {
   const csrfToken = crypto.randomBytes(64).toString("hex");
+  const userRole = await getUserRole(user);
   return [
     jwt.sign(
       {
         userId: user.id,
+        role: userRole,
         csrfToken,
       },
       process.env.JWT_SECRET ?? "",
