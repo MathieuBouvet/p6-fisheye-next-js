@@ -4,7 +4,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ### Environment variables setup
 
-Create `.env` file and set the `DATABASE_URL` variable to your local database connection string
+Create `.env` file and 
+- set the `DATABASE_URL` variable to your local database connection string
+- set the `JWT_SECRET` variable to be able to sign jwt tokens
 
 ### Install dependencies
 
