@@ -1,3 +1,6 @@
+@use "/styles/constants/colors";
+@use "/styles/mixins/button";
+
 html,
 body {
   padding: 0;
@@ -24,8 +27,38 @@ h2 {
   margin: 0;
 }
 
-button, input, textarea {
+input,
+textarea {
   font-family: inherit;
+}
+
+label,
+input,
+textarea {
+  width: 100%;
+  display: block;
+}
+
+input,
+textarea {
+  border-radius: 4px;
+  margin-top: 5px;
+  border: none;
+  padding: 5px 8px;
+  font-size: 1rem;
+}
+
+textarea {
+  resize: none;
+}
+
+label {
+  color: colors.$color-text-lighter;
+  font-size: 1.2rem;
+}
+
+input {
+  height: 35px;
 }
 
 .app {
@@ -44,4 +77,8 @@ button, input, textarea {
 
 .no-scroll {
   overflow-y: hidden;
+}
+
+.button-primary {
+  @include button.button(colors.$color-primary, white);
 }

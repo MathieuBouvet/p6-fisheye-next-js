@@ -1,3 +1,4 @@
+import cx from "classnames";
 import AnimatedModal, {
   AnimatedProps,
 } from "@components/common/AnimatedModal/AnimatedModal";
@@ -52,7 +53,9 @@ const ContactModal = ({ photographerName, ...props }: Props) => {
               Votre message
               <textarea />
             </label>
-            <button className={styles.submitButton}>Envoyer</button>
+            <button className={cx("button-primary", styles.submitButton)}>
+              Envoyer
+            </button>
           </form>
         </main>
       </section>

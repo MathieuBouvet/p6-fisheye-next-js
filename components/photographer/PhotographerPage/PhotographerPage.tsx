@@ -100,7 +100,7 @@ const PhotographerPage = ({
           </div>
           <div className={styles.contactButtonContainer}>
             <button
-              className={styles.contactButton}
+              className={cx("button-primary", styles.contactButton)}
               onClick={contactModal.setPresent}
             >
               Contactez-moi
