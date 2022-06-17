@@ -6,6 +6,7 @@ type Params = CreateUserParams & {
   country: string;
   price?: number;
   tagLine?: string;
+  tags: string[];
 };
 
 async function createPhotographer({
@@ -13,6 +14,7 @@ async function createPhotographer({
   country,
   price,
   tagLine,
+  tags,
   ...restUser
 }: Params) {
   const user = await createUser(restUser);
@@ -23,6 +25,15 @@ async function createPhotographer({
         connect: {
           id: user.id,
         },
+      },
+      tags: {
+        create: tags.map(tag => ({
+          tag: {
+            connect: {
+              name: tag.toLowerCase(),
+            },
+          },
+        })),
       },
       city,
       price,

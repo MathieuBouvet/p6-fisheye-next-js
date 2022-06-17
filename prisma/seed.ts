@@ -60,6 +60,7 @@ async function main() {
       country,
       tagLine,
       price,
+      tags,
     });
 
     const photographerMedia = media.filter(
