@@ -1,7 +1,7 @@
 import Link from "next/link";
 import cx from "classnames";
 
-import { PhotographerProfile } from "@lib/getPhotographers";
+import { PhotographerProfile } from "@lib/model/photographers/getPhotographers";
 import TagLink from "@components/common/TagLink";
 import ProfilePic from "@components/common/ProfilePic";
 

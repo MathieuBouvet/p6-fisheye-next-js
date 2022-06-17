@@ -2,7 +2,7 @@ import cx from "classnames";
 import { useRouter } from "next/router";
 
 import { Tag } from "@prisma/client";
-import { PhotographerProfile } from "@lib/getPhotographers";
+import { PhotographerProfile } from "@lib/model/photographers/getPhotographers";
 
 import Header from "@components/home/Header";
 import Photographer from "@components/home/Photographer";

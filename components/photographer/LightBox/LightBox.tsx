@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 import cx from "classnames";
 
-import { PhotographerData } from "@lib/getPhotographerById";
+import { PhotographerData } from "@lib/model/photographers/getPhotographerById";
 
 import useDisableBodyScroll from "@hooks/useDisableBodyScroll";
 
