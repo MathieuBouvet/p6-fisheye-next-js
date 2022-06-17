@@ -6,8 +6,6 @@ function isPasswordCorrect(user: User, inputPassword: string): boolean {
     .pbkdf2Sync(inputPassword, user.passwordSalt, 1000, 64, "sha512")
     .toString("hex");
 
-    console.log(inputHash, user.password)
-
   return inputHash === user.password;
 }
 

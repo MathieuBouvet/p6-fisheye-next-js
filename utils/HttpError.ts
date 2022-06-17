@@ -14,7 +14,6 @@ class HttpError extends Error {
 
   constructor(code: number, message?: string) {
     const status = statuses[code];
-    console.log(message);
     super(`${message != null ? message : status}`);
 
     this.code = code;
