@@ -57,34 +57,6 @@
   grid-template-rows: auto auto auto 1fr auto;
   gap: 15px;
 
-  label,
-  input,
-  textarea {
-    width: 100%;
-    display: block;
-  }
-
-  input,
-  textarea {
-    border-radius: 4px;
-    margin-top: 5px;
-    border: none;
-    padding: 5px 8px;
-    font-size: 1rem;
-  }
-
-  textarea {
-    resize: none;
-  }
-
-  label {
-    color: colors.$color-text-lighter;
-    font-size: 1.2rem;
-  }
-
-  input {
-    height: 35px;
-  }
 
   .messageInputGroup {
     height: 100%;

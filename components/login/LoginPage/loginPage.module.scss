@@ -1,0 +1,54 @@
+@use "/styles/constants/colors";
+@use "/styles/mixins/mediaQuery";
+
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content {
+  margin-top: 20px;
+  background-color: lighten(colors.$color-foundation, 15%);
+  flex-grow: 1;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    height: 5px;
+    left: 0;
+    right: 0;
+    background: transparent;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.2) 10%,
+      transparent 100%
+    );
+  }
+}
+
+.loginForm {
+  max-width: 450px;
+  margin: auto;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.loginButton {
+  margin-top: 25px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@include mediaQuery.screen(md) {
+  .loginForm {
+    max-width: 400px;
+    margin-top: 90px;
+  }
+}
