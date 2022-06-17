@@ -13,7 +13,10 @@ function withHttpErrorHandler(handler: NextApiHandler): NextApiHandler {
           message: err.message,
         });
       } else {
-        throw err;
+        throw new HttpError(
+          500,
+          err instanceof Error ? err.message : "unknown error"
+        );
       }
     }
   };

@@ -44,6 +44,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+}
+
+.errorNotification {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 4px;
+  color: darkred;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 @include mediaQuery.screen(md) {

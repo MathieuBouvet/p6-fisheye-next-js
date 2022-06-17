@@ -17,7 +17,7 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   try {
     requireRole(token, ROLE.PHOTOGRAPHER);
   } catch (err) {
-    return handleRoleRequiredError(err);
+    return handleRoleRequiredError(err, req.url);
   }
   return {
     props: {

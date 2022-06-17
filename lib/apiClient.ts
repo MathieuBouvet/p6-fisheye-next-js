@@ -17,10 +17,11 @@ async function send<T>({ route, body, options }: SendParams): Promise<T> {
     },
     body: body != null ? JSON.stringify(body) : undefined,
   });
+  
+  const data = res.status === 204 ? {} : await res.json();
   if (!res.ok) {
-    throw res;
+    throw data;
   }
-  const data = res.status === 204 ? {} : res.json();
   return data as Promise<T>;
 }
 
