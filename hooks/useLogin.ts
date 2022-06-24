@@ -1,5 +1,4 @@
 import { useReducer } from "react";
-import HttpError from "@utils/HttpError";
 import loginService from "@lib/services/login";
 
 type State = {

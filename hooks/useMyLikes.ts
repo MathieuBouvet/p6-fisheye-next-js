@@ -1,10 +1,11 @@
 import useSWR from "swr";
 import getFetcher from "@utils/getFetcher";
 import apiClient from "@lib/apiClient";
+import apiRoutes from "@lib/routes/apiRoutes";
 
 function useMyLikes(photographerId: number) {
   const { data, error, mutate } = useSWR(
-    `/api/likes-of-photographer-media/${photographerId}`,
+    apiRoutes.likesOfPhotographerMedia(photographerId),
     getFetcher<Record<number, true>>()
   );
 
@@ -12,8 +13,8 @@ function useMyLikes(photographerId: number) {
     if (data != null) {
       const isLiked = data[mediumId];
       const updateLike = isLiked
-        ? apiClient.delete(`/api/likes/${mediumId}`)
-        : apiClient.post(`/api/likes/${mediumId}`, {});
+        ? apiClient.delete(apiRoutes.likes(mediumId))
+        : apiClient.post(apiRoutes.likes(mediumId), {});
 
       const newData = { ...data };
       if (isLiked) {
