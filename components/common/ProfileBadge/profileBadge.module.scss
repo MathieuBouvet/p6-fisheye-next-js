@@ -1,0 +1,21 @@
+@use "/styles/constants/colors";
+
+.dropdownItem {
+  padding: 8px 16px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+
+  &:hover {
+    background-color: lighten(colors.$color-foundation, 25%);
+  }
+
+}
+
+.userName {
+  color: colors.$color-primary;
+  font-weight: bold;
+  padding: 0 16px 2px 16px;
+}

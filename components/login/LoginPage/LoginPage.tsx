@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import LoginHeader from "@components/login/LoginHeader";
 import useLogin from "@hooks/useLogin";
 
+import ProfileContainer from "@components/login/ProfileContainer";
+
 import styles from "./loginPage.module.scss";
 
 interface Props {}
@@ -33,6 +35,7 @@ const LoginPage = ({}: Props) => {
     <div className={cx(styles.loginPage)}>
       <LoginHeader />
       <div className={styles.content}>
+        <ProfileContainer />
         <form
           className={styles.loginForm}
           onSubmit={e => {

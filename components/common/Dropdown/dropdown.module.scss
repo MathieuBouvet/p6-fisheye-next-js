@@ -1,0 +1,13 @@
+@use "/styles/constants/animations";
+
+.dropdown {
+  position: relative;
+  width: fit-content;
+
+  .trigger {
+    display: block;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,61 @@
+@use "/styles/mixins/shadow";
+
+@keyframes pop-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.content {
+  background-color: white;
+  position: absolute;
+  z-index: 1;
+  min-width: 100%;
+  width: max-content;
+  height: fit-content;
+  border-radius: 4px;
+  margin-top: 8px;
+  @include shadow.light-shadow();
+
+  animation: pop-in 0.3s forwards;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 8px 0;
+
+  &.vanishing {
+    animation: pop-out 0.3s forwards;
+  }
+
+  &.left {
+    left: 0;
+  }
+
+  &.right {
+    right: 0;
+  }
+}
