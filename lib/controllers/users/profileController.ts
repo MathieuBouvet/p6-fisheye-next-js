@@ -3,7 +3,9 @@ import extractAuthToken from "@lib/auth/extractAuthToken";
 
 import getUserProfile from "@lib/model/users/getUserProfile";
 
-export type ProfileResponse = Awaited<ReturnType<typeof getUserProfile>>;
+export type ProfileResponse = {
+  profile: Awaited<ReturnType<typeof getUserProfile>>;
+};
 
 const profileController = controller({
   GET: async (req, res): Promise<ProfileResponse> => {
@@ -12,9 +14,9 @@ const profileController = controller({
     const userId = authToken?.userId;
 
     if (userId == null) {
-      return null;
+      return { profile: null };
     }
-    return getUserProfile(userId);
+    return { profile: await getUserProfile(userId) };
   },
 });
 

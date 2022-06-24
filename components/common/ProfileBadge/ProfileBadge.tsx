@@ -5,6 +5,7 @@ import Dropdown from "@components/common/Dropdown";
 import ProfilePic from "@components/common/ProfilePic";
 
 import useMyProfile from "@hooks/useMyProfile";
+import useLogout from "@hooks/useLogout";
 
 import styles from "./profileBadge.module.scss";
 
@@ -15,6 +16,8 @@ interface Props {
 
 const ProfileBadge = ({ size = 65, alignment = "left" }: Props) => {
   const profile = useMyProfile();
+  const logout = useLogout();
+
   if (profile == null) {
     return null;
   }
@@ -35,7 +38,9 @@ const ProfileBadge = ({ size = 65, alignment = "left" }: Props) => {
       <Link href="/users/my-profile">
         <a className={cx(styles.dropdownItem)}>Mon profil</a>
       </Link>
-      <button className={cx(styles.dropdownItem)}>Déconnexion</button>
+      <button className={cx(styles.dropdownItem)} onClick={logout}>
+        Déconnexion
+      </button>
     </Dropdown>
   );
 };

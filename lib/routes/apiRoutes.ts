@@ -1,4 +1,5 @@
 const login = () => "/api/login";
+const logout = () => "/api/logout";
 
 const myProfile = () => "/api/users/my-profile";
 
@@ -8,6 +9,7 @@ const likesOfPhotographerMedia = (photographerId: number) =>
 
 const apiRoutes = {
   login,
+  logout,
   myProfile,
   likes,
   likesOfPhotographerMedia,
