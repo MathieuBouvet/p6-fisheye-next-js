@@ -14,7 +14,7 @@ async function getUserRole(user: User): Promise<ROLE> {
   if (associatedPhotographer != null) {
     return ROLE.PHOTOGRAPHER;
   }
-  return ROLE.ANONYMOUS;
+  return ROLE.SIMPLE_USER;
 }
 
 export default getUserRole;

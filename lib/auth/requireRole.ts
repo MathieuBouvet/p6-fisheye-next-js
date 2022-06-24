@@ -2,11 +2,11 @@ import { AuthToken } from "@lib/auth/extractAuthToken";
 import HttpError from "@utils/HttpError";
 import { ROLE, isRoleGranted } from "@lib/auth/roles";
 
+import getRoleFromToken from "@lib/auth/getRoleFromToken";
+
 function requireRole(token: AuthToken | null, role: ROLE) {
-  if (token == null) {
-    throw new HttpError(401, "Login required");
-  }
-  const currentRole = token.role;
+  const currentRole = getRoleFromToken(token);
+
   if (!isRoleGranted(currentRole, role)) {
     throw new HttpError(403, `User must be a ${role}`);
   }
