@@ -1,5 +1,8 @@
 import { useReducer } from "react";
+import { useSWRConfig } from "swr";
 import loginService from "@lib/services/login";
+
+import apiRoutes from "@lib/routes/apiRoutes";
 
 type State = {
   isPending: boolean;
@@ -70,6 +73,8 @@ function useLogin() {
     INITAL_STATE
   );
 
+  const { mutate } = useSWRConfig();
+
   async function login({
     email,
     password,
@@ -79,6 +84,7 @@ function useLogin() {
     try {
       await loginService(email, password);
       dispatch({ type: "succeeded" });
+      mutate(apiRoutes.myProfile(), undefined);
       onLoginSuccess();
     } catch (err) {
       let errorMessage: string;

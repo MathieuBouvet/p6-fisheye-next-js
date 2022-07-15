@@ -33,7 +33,7 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   return {
     props: {
       profileFallback: {
-        [apiRoutes.myProfile()]: profile,
+        [apiRoutes.myProfile()]: { profile },
       },
     },
   };

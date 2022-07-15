@@ -11,7 +11,7 @@ function useLogout() {
   return async () => {
     await apiClient.post(apiRoutes.logout(), {});
     window.localStorage.removeItem("csrf_token");
-    mutate(apiRoutes.myProfile());
+    mutate(apiRoutes.myProfile(), { profile: null });
     router.push("/");
   };
 }
