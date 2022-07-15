@@ -1,0 +1,41 @@
+@use "/styles/mixins/mediaQuery";
+
+.header {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "logo profile-pic"
+    "menu menu";
+  gap: 10px;
+  align-items: center;
+}
+
+.menu {
+  grid-area: menu;
+  display: flex;
+}
+
+@include mediaQuery.screen("sm") {
+  .menu {
+    justify-content: flex-start;
+  }
+}
+
+@include mediaQuery.screen("md") {
+  .header {
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 1fr;
+    grid-template-areas: "logo menu prifile-pic";
+    column-gap: 45px;
+  }
+
+  .menu {
+    align-self: flex-start;
+  }
+
+  .logo {
+    align-self: flex-start;
+  }
+}

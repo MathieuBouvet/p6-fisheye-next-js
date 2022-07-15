@@ -1,4 +1,5 @@
 import useSWR from "swr";
+
 import getFetcher from "@utils/getFetcher";
 import apiRoutes from "@lib/routes/apiRoutes";
 

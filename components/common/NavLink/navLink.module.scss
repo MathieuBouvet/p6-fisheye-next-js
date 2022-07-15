@@ -1,0 +1,21 @@
+@use "/styles/constants/colors";
+@use "/styles/mixins/mediaQuery";
+
+.navLink {
+  width: 100%;
+  padding: 8px 0;
+  text-align: center;
+
+  border-bottom: 2px solid transparent;
+
+  &.active {
+    border-color: colors.$color-primary;
+  }
+}
+
+@include mediaQuery.screen("sm") {
+  .navLink {
+    width: 150px;
+    padding: 14px;
+  }
+}
