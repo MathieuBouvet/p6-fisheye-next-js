@@ -1,0 +1,12 @@
+@use "/styles/constants/colors";
+
+.formikInput {
+  &.hasError {
+    color: colors.$color-error;
+
+    .input {
+      border-color: colors.$color-error;
+      outline-color: colors.$color-error;
+    }
+  }
+}

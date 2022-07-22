@@ -1,0 +1,80 @@
+@use "/styles/constants/colors";
+@use "/styles/mixins/mediaQuery";
+
+.profileForm {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  label {
+    font-size: 1.1rem;
+  }
+
+  input,
+  textarea {
+    border: 1px solid colors.$color-muted;
+    color: colors.$color-muted;
+    font-style: inherit;
+  }
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formGroup {
+  padding: 0;
+  margin: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.groupTitle {
+  color: colors.$color-secondary;
+  font-weight: lighter;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.errorMessage {
+  color: #e53e3e;
+}
+
+.submit {
+  height: 35px;
+}
+
+@include mediaQuery.screen("md") {
+  .profileForm {
+    max-width: 85%;
+  }
+
+  .submit {
+    align-self: flex-start;
+    padding: 0 15px;
+  }
+}
+
+@include mediaQuery.screen("lg") {
+  .profileForm {
+    max-width: 75%;
+  }
+}
+
+@include mediaQuery.screen("xl") {
+  .profileForm {
+    max-width: 65%;
+  }
+}
+
+@include mediaQuery.screen("xxl") {
+  .profileForm {
+    max-width: 55%;
+  }
+}
