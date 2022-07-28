@@ -1,5 +1,5 @@
 import extractAuthToken from "@lib/auth/extractAuthToken";
-import requireRole from "@lib/auth/requireRole";
+import requireRole from "@lib/auth/accessControl/requireRole";
 import { ROLE } from "@lib/auth/roles";
 import handleRoleRequiredError from "@utils/handleRoleRequiredError";
 import useMyProfile from "@hooks/useMyProfile";
