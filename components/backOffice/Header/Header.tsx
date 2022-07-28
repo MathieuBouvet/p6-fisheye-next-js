@@ -17,7 +17,7 @@ const Header = ({ children }: Props) => {
           <AppLogo />
         </a>
       </Link>
-      <ProfileBadge />
+      <ProfileBadge alignment="right"/>
       <nav className={styles.menu}>{children}</nav>
     </header>
   );

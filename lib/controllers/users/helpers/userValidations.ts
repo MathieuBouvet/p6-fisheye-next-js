@@ -9,7 +9,7 @@ import { isString, isEmail } from "@lib/validators/isString";
 import isDefined from "@lib/validators/isDefined";
 import { isGreaterThanZero } from "@lib/validators/isNumber";
 
-type UserData = {
+export type UserData = {
   email: string;
   firstName: string;
   lastName: string;

@@ -6,7 +6,7 @@ import styles from "./profileContainer.module.scss";
 interface Props {}
 
 const Profilecontainer = ({}: Props) => {
-  const profile = useMyProfile();
+  const [profile] = useMyProfile();
 
   return (
     <div className={styles.profileContainer}>

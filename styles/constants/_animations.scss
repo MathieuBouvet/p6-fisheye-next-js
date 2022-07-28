@@ -66,3 +66,18 @@
     opacity: 0;
   }
 }
+
+@keyframes blink {
+  from {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  51% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -15,7 +15,7 @@ interface Props {
 }
 
 const ProfileBadge = ({ size = 65, alignment = "left" }: Props) => {
-  const profile = useMyProfile();
+  const [profile] = useMyProfile();
   const logout = useLogout();
 
   if (profile == null) {

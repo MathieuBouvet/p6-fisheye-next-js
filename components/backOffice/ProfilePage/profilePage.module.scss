@@ -1,5 +1,6 @@
 @use "/styles/constants/colors";
 @use "/styles/mixins/mediaQuery";
+@use "/styles/constants/animations";
 
 .profileForm {
   margin-top: 15px;
@@ -50,6 +51,51 @@
   height: 35px;
 }
 
+.notification {
+  border-radius: 5px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error {
+  background-color: lighten(colors.$color-error, 40%);
+  color: colors.$color-error;
+}
+
+.success {
+  background-color: #d4eddc;
+  color: colors.$color-success;
+}
+
+.dismissButton {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  color: inherit;
+  margin-left: auto;
+  cursor: pointer;
+  transition: opacity 0.1s ease;
+}
+
+.blink {
+  opacity: 0;
+  display: inline-block;
+  animation: blink 1s linear 0s infinite;
+}
+
+.delay1 {
+  animation-delay: 0.1s;
+}
+.delay2 {
+  animation-delay: 0.2s;
+
+}
+
 @include mediaQuery.screen("md") {
   .profileForm {
     max-width: 85%;
@@ -76,5 +122,15 @@
 @include mediaQuery.screen("xxl") {
   .profileForm {
     max-width: 55%;
+  }
+}
+
+@media (hover: hover) {
+  .notification:hover .dismissButton {
+    opacity: 100;
+  }
+
+  .dismissButton {
+    opacity: 0;
   }
 }

@@ -40,7 +40,7 @@ async function post<T = void>(
 async function put<T>(
   route: string,
   data: any,
-  options: NoBodyOptions & NoMethodOptions
+  options?: NoBodyOptions & NoMethodOptions
 ): Promise<T> {
   return send({ route, body: data, options: { ...options, method: "PUT" } });
 }

@@ -3,6 +3,7 @@ import prisma from "@lib/model/prisma";
 async function getUserProfile(userId: number) {
   const profile = await prisma.user.findUnique({
     select: {
+      id: true,
       email: true,
       firstName: true,
       lastName: true,

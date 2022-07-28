@@ -22,7 +22,7 @@ const ProtectedPage = ({ profileFallback }: Props) => {
 };
 
 const Page = () => {
-  const profile = useMyProfile();
+  const [profile] = useMyProfile();
   return <div>ok pour {profile?.email ?? "..."}</div>;
 };
 
