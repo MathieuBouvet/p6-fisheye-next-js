@@ -7,6 +7,7 @@ import isNotArray from "@lib/validators/isNotArray";
 import toInteger from "@lib/validators/toInteger";
 import { isString, isEmail } from "@lib/validators/isString";
 import isDefined from "@lib/validators/isDefined";
+import { isArrayOfNumber, isNotEmptyArray } from "@lib/validators/isArray";
 import { isGreaterThanZero } from "@lib/validators/isNumber";
 
 export type UserData = {
@@ -18,6 +19,7 @@ export type UserData = {
     city: string;
     tagLine: string | null;
     price: number | null;
+    tags: number[];
   };
 };
 
@@ -31,6 +33,8 @@ const isRequiredEmail = (input: any) => isRequired(isEmail(input));
 const isDefinedString = (input: any) => isDefined(isString(input));
 const isDefinedAndGreaterThanZero = (input: any) =>
   isDefined(isGreaterThanZero(input));
+const isTagArrayValid = (input: any) =>
+  isRequired(isNotEmptyArray(isArrayOfNumber(input)));
 
 const validateUserData = (body: NextApiRequest["body"]): UserData => {
   const userData = {
@@ -43,28 +47,32 @@ const validateUserData = (body: NextApiRequest["body"]): UserData => {
     return userData;
   }
 
+  console.log(body.photographer.tags);
+
   return {
     ...userData,
     photographer: {
       country: validation(
         isRequiredString,
         "photographer country"
-      )(body.photographer?.country),
+      )(body.photographer.country),
 
       city: validation(
         isRequiredString,
         "photographer city"
-      )(body.photographer?.city),
+      )(body.photographer.city),
 
       tagLine: validation(
         isDefinedString,
         "tagLine"
-      )(body.photographer?.tagLine),
+      )(body.photographer.tagLine),
 
       price: validation(
         isDefinedAndGreaterThanZero,
         "price"
-      )(body?.photographer?.price),
+      )(body.photographer.price),
+
+      tags: validation(isTagArrayValid, "tags")(body.photographer.tags),
     },
   };
 };

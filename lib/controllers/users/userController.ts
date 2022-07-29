@@ -17,11 +17,11 @@ import {
 
 export type UpdateUserResponse = Awaited<ReturnType<typeof getUserProfile>>;
 
-function updateUserErrorHandler(err: unknown, userId: number) {
+function updateUserErrorHandler(err: unknown) {
   if (!(err instanceof PrismaClientKnownRequestError) || err.code !== "P2025") {
     throw err;
   }
-  throw new HttpError(404, `user ${userId} not found`);
+  throw new HttpError(400, `at least one provided tags does not exists`);
 }
 
 const userController = controller({
@@ -46,7 +46,7 @@ const userController = controller({
     try {
       await updateUser({ id: user.id, ...userData });
     } catch (err) {
-      updateUserErrorHandler(err, user.id);
+      updateUserErrorHandler(err);
     }
 
     return getUserProfile(user.id);

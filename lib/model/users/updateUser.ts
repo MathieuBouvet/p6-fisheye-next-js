@@ -10,15 +10,25 @@ export type UpdateUserData = {
     city: string;
     tagLine: string | null;
     price: number | null;
+    tags: number[];
   };
 };
 
 function updateUser({ id, photographer, ...user }: UpdateUserData) {
+  const { tags = [], ...restPhotographer } = photographer ?? {};
   const updatePhotographerPart =
     photographer != null
       ? prisma.photographer.update({
           where: { userId: id },
-          data: photographer,
+          data: {
+            ...restPhotographer,
+            tags: {
+              deleteMany: {},
+              create: tags.map(tagId => ({
+                tag: { connect: { id: tagId } },
+              })),
+            },
+          },
         })
       : Promise.resolve();
 

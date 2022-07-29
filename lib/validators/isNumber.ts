@@ -1,6 +1,6 @@
 import validator from "@utils/validator";
 
-const isNumberAs = (checkerFn: (input: number) => boolean, message: string) =>
+const isNumberLike = (checkerFn: (input: number) => boolean, message: string) =>
   validator((input: any) => {
     if (typeof input === "number" && checkerFn(input)) {
       return [true, input] as const;
@@ -11,10 +11,10 @@ const isNumberAs = (checkerFn: (input: number) => boolean, message: string) =>
     return [false, null] as const;
   }, message);
 
-const isNumber = isNumberAs(() => true, "must be a number");
-const isGreaterThanZero = isNumberAs(
+const isNumber = isNumberLike(() => true, "must be a number");
+const isGreaterThanZero = isNumberLike(
   input => input >= 0,
   "must be a number greater than zero"
 );
 
-export { isNumber, isGreaterThanZero, isNumberAs };
+export { isNumber, isGreaterThanZero, isNumberLike as isNumberAs };
