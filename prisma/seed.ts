@@ -1,5 +1,6 @@
 import prisma from "@lib/model/prisma";
 import createPhotographer from "@lib/model/photographers/createPhotographer";
+import createUser from "@lib/model/users/createUser";
 
 import {
   photographers,
@@ -138,6 +139,13 @@ async function main() {
       await Promise.all(likeCreationPromises);
     }
   }
+
+  await createUser({
+    email: "main.admin@fisheye.com",
+    firstName: "main",
+    lastName: "admin",
+    password: "aaa",
+  });
 }
 
 main()

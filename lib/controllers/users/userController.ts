@@ -3,11 +3,12 @@ import HttpError from "@utils/HttpError";
 import controller from "@utils/controller";
 
 import extractAuthToken from "@lib/auth/extractAuthToken";
-import requireMatchingUserIds from "@lib/auth/accessControl/requireMatchingUserIds";
+import requireOwnershipOfUserData from "@lib/auth/accessControl/requireOwnershipOfUserData";
 import requireLogin from "@lib/auth/accessControl/requireLogin";
 
 import updateUser from "@lib/model/users/updateUser";
 import getUserProfile from "@lib/model/users/getUserProfile";
+import { findUserByIdOrFail } from "@lib/model/users/findUserById";
 
 import {
   validateUserData,
@@ -26,20 +27,29 @@ function updateUserErrorHandler(err: unknown, userId: number) {
 const userController = controller({
   PUT: async (req, res): Promise<UpdateUserResponse> => {
     const authToken = extractAuthToken(req, res);
-    const userId = validateUserId(req.query.userId);
-
     requireLogin(authToken);
-    requireMatchingUserIds(authToken, userId);
+
+    const userId = validateUserId(req.query.userId);
+    const user = await findUserByIdOrFail(userId);
+
+    requireOwnershipOfUserData(authToken, user);
+
+    if (user.photographer == null && req.body.photographer != null) {
+      throw new HttpError(
+        400,
+        "Trying to update photographer data of a non-photographer user"
+      );
+    }
 
     const userData = validateUserData(req.body);
 
     try {
-      await updateUser({ id: userId, ...userData });
+      await updateUser({ id: user.id, ...userData });
     } catch (err) {
-      updateUserErrorHandler(err, userId);
+      updateUserErrorHandler(err, user.id);
     }
 
-    return getUserProfile(userId);
+    return getUserProfile(user.id);
   },
 });
 
