@@ -5,11 +5,12 @@ import styles from "./tag.module.scss";
 interface Props {
   isActive?: boolean;
   children: string;
+  className?: string;
 }
 
-const Tag = ({ isActive = false, children }: Props) => {
+const Tag = ({ isActive = false, children, className }: Props) => {
   return (
-    <div className={cx(styles.tag, { [styles.active]: isActive })}>
+    <div className={cx(styles.tag, className, { [styles.active]: isActive })}>
       #<span className={styles.tagName}>{children}</span>
     </div>
   );

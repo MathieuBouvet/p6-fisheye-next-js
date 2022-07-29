@@ -49,12 +49,15 @@ const checkEmail = emailChecker("email");
 const checkPrice = numberChecker("price");
 
 function validateProfileFormData(values: ProfileFormData): ValidationErrors {
+  const tagError =
+    values.tags.length === 0 ? { tags: "requis" } : {};
   return {
     ...checkLength100(values),
     ...checkLength255(values),
     ...checkEmail(values),
     ...checkRequiredValues(values),
     ...checkPrice(values),
+    ...tagError,
   };
 }
 

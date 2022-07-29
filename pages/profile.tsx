@@ -1,23 +1,26 @@
+import { SWRConfig } from "swr";
+import { GetServerSideProps } from "next";
+import { InferGetServerSidePropsType } from "next";
+
 import extractAuthToken from "@lib/auth/extractAuthToken";
 import requireRole from "@lib/auth/accessControl/requireRole";
+
 import { ROLE } from "@lib/auth/roles";
-import handleRoleRequiredError from "@utils/handleRoleRequiredError";
-import getUserProfile from "@lib/model/users/getUserProfile";
-import { ProfileResponse } from "@lib/controllers/users/profileController";
-import { SWRConfig } from "swr";
+
 import apiRoutes from "@lib/routes/apiRoutes";
-import { GetServerSideProps } from "next";
+import getUserProfile from "@lib/model/users/getUserProfile";
+import getTags from "@lib/model/tags/getTags";
+import handleRoleRequiredError from "@utils/handleRoleRequiredError";
 
 import ProfilePage from "@components/backOffice/ProfilePage";
 
-interface Props {
-  profileFallback: Record<string, ProfileResponse | null>;
-}
-
-const profile = ({ profileFallback }: Props) => {
+const profile = ({
+  profileFallback,
+  tags,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <SWRConfig value={{ fallback: profileFallback }}>
-      <ProfilePage />
+      <ProfilePage tags={tags} />
     </SWRConfig>
   );
 };
@@ -29,9 +32,14 @@ const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   } catch (err) {
     return handleRoleRequiredError(err, req.url);
   }
-  const profile = token != null ? await getUserProfile(token.userId) : null;
+
+  const [profile, tags] = await Promise.all([
+    token != null ? await getUserProfile(token.userId) : null,
+    getTags(),
+  ]);
   return {
     props: {
+      tags,
       profileFallback: {
         [apiRoutes.myProfile()]: { profile },
       },

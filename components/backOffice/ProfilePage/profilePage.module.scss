@@ -43,6 +43,19 @@
   margin-bottom: 5px;
 }
 
+.pseudoLabel {
+  font-size: 1.1rem;
+  color: colors.$color-text-lighter;
+}
+
+.tagContainer {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  align-items: center;
+}
+
 .errorMessage {
   color: #e53e3e;
 }
@@ -93,7 +106,6 @@
 }
 .delay2 {
   animation-delay: 0.2s;
-
 }
 
 @include mediaQuery.screen("md") {

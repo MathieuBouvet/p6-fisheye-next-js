@@ -8,6 +8,7 @@ export type ProfileFormData = {
   city: string;
   tagLine: string;
   price: string;
+  tags: string[];
 };
 
 function getProfilFormData(profile: Profile): ProfileFormData {
@@ -19,6 +20,7 @@ function getProfilFormData(profile: Profile): ProfileFormData {
     city: profile?.photographer?.city ?? "",
     tagLine: profile?.photographer?.tagLine ?? "",
     price: profile?.photographer?.price?.toString() ?? "",
+    tags: (profile?.photographer?.tags ?? []).map(tag => tag.toString()),
   };
 }
 
