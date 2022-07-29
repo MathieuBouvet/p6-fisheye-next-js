@@ -38,7 +38,6 @@ const ProfilePage = ({ tags }: Props) => {
         <Formik
           initialValues={initialProfile}
           onSubmit={async (values, actions) => {
-            console.log(values);
             setShowError(false);
             setShowSuccess(false);
             if (profile != null) {

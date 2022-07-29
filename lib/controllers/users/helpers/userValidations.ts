@@ -47,8 +47,6 @@ const validateUserData = (body: NextApiRequest["body"]): UserData => {
     return userData;
   }
 
-  console.log(body.photographer.tags);
-
   return {
     ...userData,
     photographer: {
