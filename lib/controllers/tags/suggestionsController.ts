@@ -24,7 +24,7 @@ const suggestionsController = controller({
 
     const tagName = validateTagName(req.body.tagName);
 
-    const tag = await suggestTag(tagName, authToken.userId);
+    const tag = await suggestTag(tagName.toLowerCase(), authToken.userId);
 
     res.status(201);
     return tag;

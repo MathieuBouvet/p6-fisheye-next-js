@@ -32,6 +32,13 @@ const ProfilePage = ({ tags }: Props) => {
 
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const [isSuggestionRequestPending, setIsSuggestionRequestPending] =
+    useState(false);
+  const [suggestionError, setSuggestionError] = useState<
+    null | "network" | "duplicates"
+  >(null);
+
   const [isSuggestingTag, setIsSuggestingTag] = useState(false);
   const [suggestingTagValue, setSuggestingTagValue] = useState("");
 
@@ -40,15 +47,28 @@ const ProfilePage = ({ tags }: Props) => {
     setIsSuggestingTag(false);
     setSuggestingTagValue("");
 
+    if (
+      tags.some(tag => tag.name.toLowerCase() === tagName.toLowerCase()) ||
+      pendingTags.some(tag => tag.name.toLowerCase() === tagName.toLowerCase())
+    ) {
+      setSuggestionError("duplicates");
+      return;
+    }
+
     if (tagName !== "") {
-      try {
-        mutatePendingTags(async pendingTags => {
+      setIsSuggestionRequestPending(true);
+      setSuggestionError(null);
+      mutatePendingTags(async pendingTags => {
+        try {
           const tag = await suggestTag(tagName);
           return [...(pendingTags ?? []), tag];
-        });
-      } catch (err) {
-        console.log(err);
-      }
+        } catch (err) {
+          console.log(err);
+          setSuggestionError("network");
+        } finally {
+          setIsSuggestionRequestPending(false);
+        }
+      });
     }
   }
 
@@ -122,7 +142,14 @@ const ProfilePage = ({ tags }: Props) => {
                         </span>
                       </Tag>
                     ))}
-                    {isSuggestingTag ? (
+                    {isSuggestionRequestPending ? (
+                      <i
+                        className={cx(
+                          "fas fa-spinner fa-pulse",
+                          styles.suggestionSpinner
+                        )}
+                      ></i>
+                    ) : isSuggestingTag ? (
                       <Tag>
                         <input
                           className={styles.suggestTagInput}
@@ -147,6 +174,26 @@ const ProfilePage = ({ tags }: Props) => {
                       </button>
                     )}
                   </div>
+                  {suggestionError != null && (
+                    <div
+                      className={cx(
+                        styles.notification,
+                        styles.error,
+                        styles.tagSuggestionNotification
+                      )}
+                    >
+                      <i className="fa fa-exclamation-circle" />
+                      {suggestionError === "network" &&
+                        "Une erreur est survenue pendant la sauvegarde"}
+                      {suggestionError === "duplicates" && "Ce tag éxiste déjà"}
+                      <button
+                        className={styles.dismissButton}
+                        onClick={() => setSuggestionError(null)}
+                      >
+                        <i className="far fa-times-circle"></i>
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <FormikInput name="country">Pays</FormikInput>
                 <FormikInput name="city">Ville</FormikInput>

@@ -78,6 +78,10 @@
   }
 }
 
+.suggestionSpinner {
+  color: colors.$color-primary;
+}
+
 .suggestTagButton {
   color: colors.$color-secondary;
 
@@ -100,6 +104,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
+
+  &.tagSuggestionNotification {
+    margin-top: 15px;
+  }
 }
 
 .error {
