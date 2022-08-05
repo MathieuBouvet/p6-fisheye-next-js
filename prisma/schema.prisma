@@ -21,6 +21,7 @@ model User {
   profilePicDominantColor String?       @default("FFFFFF") @db.Char(6)
   isAdmin                 Boolean
   photographer            Photographer?
+  suggestedTags           Tag[]
 }
 
 model Photographer {
@@ -55,9 +56,18 @@ enum MediumType {
   VIDEO
 }
 
+enum TagStatus {
+  ACCEPTED
+  PENDING
+  DENIED
+}
+
 model Tag {
   id               Int               @id @default(autoincrement())
   name             String            @unique
+  status           TagStatus         @default(ACCEPTED)
+  suggestedBy      User?             @relation(fields: [suggestorId], references: [id])
+  suggestorId      Int?
   photographerTags PhotographerTag[]
   mediumTags       MediumTag[]
 }
