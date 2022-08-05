@@ -9,6 +9,7 @@ const likesOfPhotographerMedia = (photographerId: number) =>
   `/api/likes-of-photographer-media/${photographerId}`;
 
 const userPendingTags = (userId: number) => `/api/users/${userId}/pending-tags`;
+const tagSuggestions = () => "/api/tags/suggestions";
 
 const apiRoutes = {
   login,
@@ -18,6 +19,7 @@ const apiRoutes = {
   likesOfPhotographerMedia,
   user,
   userPendingTags,
+  tagSuggestions,
 };
 
 export default apiRoutes;

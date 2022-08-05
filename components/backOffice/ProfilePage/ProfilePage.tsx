@@ -17,6 +17,7 @@ import getProfileFormData from "@components/backOffice/ProfilePage/helpers/getPr
 import getUserData from "@components/backOffice/ProfilePage/helpers/getUserData";
 import validateProfileFormData from "@components/backOffice/ProfilePage/helpers/validateProfileFormData";
 import updateUser from "@lib/services/updateUser";
+import suggestTag from "@lib/services/suggestTag";
 
 import styles from "./profilePage.module.scss";
 
@@ -27,10 +28,29 @@ interface Props {
 const ProfilePage = ({ tags }: Props) => {
   const [profile, mutateProfile] = useMyProfile();
   const initialProfile = getProfileFormData(profile);
+  const [pendingTags, mutatePendingTags] = usePendingTags(profile?.id ?? -1);
+
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isSuggestingTag, setIsSuggestingTag] = useState(false);
+  const [suggestingTagValue, setSuggestingTagValue] = useState("");
 
-  const [pendingTags] = usePendingTags(profile?.id ?? -1);
+  async function suggestingTagEnd() {
+    const tagName = suggestingTagValue;
+    setIsSuggestingTag(false);
+    setSuggestingTagValue("");
+
+    if (tagName !== "") {
+      try {
+        mutatePendingTags(async pendingTags => {
+          const tag = await suggestTag(tagName);
+          return [...(pendingTags ?? []), tag];
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
 
   return (
     <div className="app">
@@ -102,12 +122,30 @@ const ProfilePage = ({ tags }: Props) => {
                         </span>
                       </Tag>
                     ))}
-                    <button
-                      type="button"
-                      className={cx("button-bare", styles.suggestTagButton)}
-                    >
-                      Suggérer un tag
-                    </button>
+                    {isSuggestingTag ? (
+                      <Tag>
+                        <input
+                          className={styles.suggestTagInput}
+                          value={suggestingTagValue}
+                          onChange={e => setSuggestingTagValue(e.target.value)}
+                          ref={el => {
+                            el?.focus();
+                          }}
+                          onBlur={suggestingTagEnd}
+                          onKeyDown={e => {
+                            e.key === "Enter" && suggestingTagEnd();
+                          }}
+                        />
+                      </Tag>
+                    ) : (
+                      <button
+                        type="button"
+                        className={cx("button-bare", styles.suggestTagButton)}
+                        onClick={() => setIsSuggestingTag(true)}
+                      >
+                        Suggérer un tag
+                      </button>
+                    )}
                   </div>
                 </div>
                 <FormikInput name="country">Pays</FormikInput>
