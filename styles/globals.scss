@@ -83,6 +83,10 @@ input {
   @include button.button(colors.$color-primary, white);
 }
 
+.button-bare {
+  @include button.button(transparent, black)
+}
+
 .sr-only {
   position: absolute;
   left: -10000px;

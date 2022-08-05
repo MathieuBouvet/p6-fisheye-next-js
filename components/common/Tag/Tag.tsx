@@ -4,7 +4,7 @@ import styles from "./tag.module.scss";
 
 interface Props {
   isActive?: boolean;
-  children: string;
+  children: React.ReactNode;
   className?: string;
 }
 

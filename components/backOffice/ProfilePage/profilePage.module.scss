@@ -54,6 +54,22 @@
   flex-wrap: wrap;
   margin-top: 5px;
   align-items: center;
+
+  .pendingTag {
+    background-color: darken(colors.$color-primary, 15);
+    i {
+      font-size: 0.75rem;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.suggestTagButton {
+  color: colors.$color-secondary;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .errorMessage {

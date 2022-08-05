@@ -8,8 +8,10 @@ import Header from "@components/backOffice/Header";
 import NavLink from "@components/common/NavLink";
 import FormikInput from "@components/common/FormikInput";
 import FormikTagInput from "@components/common/FormikTagInput";
+import Tag from "@components/common/Tag";
 
 import useMyProfile from "@hooks/useMyProfile";
+import usePendingTags from "@hooks/usePendingTags";
 
 import getProfileFormData from "@components/backOffice/ProfilePage/helpers/getProfileFormData";
 import getUserData from "@components/backOffice/ProfilePage/helpers/getUserData";
@@ -27,6 +29,8 @@ const ProfilePage = ({ tags }: Props) => {
   const initialProfile = getProfileFormData(profile);
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const [pendingTags] = usePendingTags(profile?.id ?? -1);
 
   return (
     <div className="app">
@@ -91,6 +95,19 @@ const ProfilePage = ({ tags }: Props) => {
                         {tag.name}
                       </FormikTagInput>
                     ))}
+                    {pendingTags.map(tag => (
+                      <Tag key={tag.id} className={styles.pendingTag} isActive>
+                        <span title="En attente d'acceptation">
+                          {tag.name} <i className="far fa-hourglass"></i>
+                        </span>
+                      </Tag>
+                    ))}
+                    <button
+                      type="button"
+                      className={cx("button-bare", styles.suggestTagButton)}
+                    >
+                      Suggérer un tag
+                    </button>
                   </div>
                 </div>
                 <FormikInput name="country">Pays</FormikInput>
