@@ -4,6 +4,7 @@ import extractAuthToken from "@lib/auth/extractAuthToken";
 import requireLogin from "@lib/auth/accessControl/requireLogin";
 import requireRole from "@lib/auth/accessControl/requireRole";
 import suggestTag from "@lib/model/tags/suggestTag";
+import { findUserByIdOrFail } from "@lib/model/users/findUserById";
 
 import validation from "@utils/validation";
 import isRequired from "@lib/validators/isRequired";
@@ -24,7 +25,9 @@ const suggestionsController = controller({
 
     const tagName = validateTagName(req.body.tagName);
 
-    const tag = await suggestTag(tagName.toLowerCase(), authToken.userId);
+    const user = await findUserByIdOrFail(authToken.userId);
+
+    const tag = await suggestTag(tagName.toLowerCase(), user);
 
     res.status(201);
     return tag;
