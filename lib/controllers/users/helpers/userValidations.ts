@@ -9,6 +9,7 @@ import { isString, isEmail } from "@lib/validators/isString";
 import isDefined from "@lib/validators/isDefined";
 import { isArrayOfNumber, isNotEmptyArray } from "@lib/validators/isArray";
 import { isGreaterThanZero } from "@lib/validators/isNumber";
+import isRequiredString from "@lib/validators/isReqquiredString";
 
 export type UserData = {
   email: string;
@@ -28,7 +29,6 @@ const validateUserId = validation(
   "userId in query"
 );
 
-const isRequiredString = (input: any) => isRequired(isString(input));
 const isRequiredEmail = (input: any) => isRequired(isEmail(input));
 const isDefinedString = (input: any) => isDefined(isString(input));
 const isDefinedAndGreaterThanZero = (input: any) =>

@@ -3,6 +3,7 @@ const logout = () => "/api/logout";
 
 const myProfile = () => "/api/users/my-profile";
 const user = (userId: number) => `/api/users/${userId}`;
+const profilePic = (userId: number) => `/api/users/${userId}/profile-pic`;
 
 const likes = (mediumId: number) => `/api/likes/${mediumId}`;
 const likesOfPhotographerMedia = (photographerId: number) =>
@@ -18,6 +19,7 @@ const apiRoutes = {
   likes,
   likesOfPhotographerMedia,
   user,
+  profilePic,
   userPendingTags,
   tagSuggestions,
 };

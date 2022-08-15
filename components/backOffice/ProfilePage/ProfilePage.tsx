@@ -9,6 +9,7 @@ import NavLink from "@components/common/NavLink";
 import FormikInput from "@components/common/FormikInput";
 import FormikTagInput from "@components/common/FormikTagInput";
 import Tag from "@components/common/Tag";
+import ProfilePicUpdater from "@components/backOffice/ProfilePage/ProfilePicUpdater";
 
 import useMyProfile from "@hooks/useMyProfile";
 import usePendingTags from "@hooks/usePendingTags";
@@ -16,8 +17,8 @@ import usePendingTags from "@hooks/usePendingTags";
 import getProfileFormData from "@components/backOffice/ProfilePage/helpers/getProfileFormData";
 import getUserData from "@components/backOffice/ProfilePage/helpers/getUserData";
 import validateProfileFormData from "@components/backOffice/ProfilePage/helpers/validateProfileFormData";
-import updateUser from "@lib/services/updateUser";
-import suggestTag from "@lib/services/suggestTag";
+import updateUser from "@lib/services/clientRequests/updateUser";
+import suggestTag from "@lib/services/clientRequests/suggestTag";
 
 import styles from "./profilePage.module.scss";
 
@@ -79,6 +80,8 @@ const ProfilePage = ({ tags }: Props) => {
         <NavLink href="/not-implemented-yet">Mes oeuvres</NavLink>
       </Header>
       <main>
+        <p className={styles.groupTitle}>Image de profil</p>
+        <ProfilePicUpdater />
         <Formik
           initialValues={initialProfile}
           onSubmit={async (values, actions) => {

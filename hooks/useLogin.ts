@@ -1,6 +1,6 @@
 import { useReducer } from "react";
 import { useSWRConfig } from "swr";
-import loginService from "@lib/services/login";
+import loginService from "@lib/services/clientRequests/login";
 
 import apiRoutes from "@lib/routes/apiRoutes";
 
