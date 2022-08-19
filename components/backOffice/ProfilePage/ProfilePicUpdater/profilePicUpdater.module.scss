@@ -2,9 +2,29 @@
   position: relative;
   width: 75%;
   height: 450px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 15px;
 }
 
-.fileInput {
+.overlayedControl {
   position: relative;
   z-index: 1;
+}
+
+.colorPicker {
+  width: 50px;
+}
+
+.deleteImageButton {
+  padding: 5px 15px;
+
+  i {
+    font-size: 0.9rem;
+  }
+}
+
+.userBadge {
+  width: 350px;
 }

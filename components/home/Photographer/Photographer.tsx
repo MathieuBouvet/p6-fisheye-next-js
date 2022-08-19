@@ -5,6 +5,8 @@ import { PhotographerProfile } from "@lib/model/photographers/getPhotographers";
 import TagLink from "@components/common/TagLink";
 import ProfilePic from "@components/common/ProfilePic";
 
+import getInitials from "@utils/getInitials";
+
 import styles from "./photographer.module.scss";
 
 interface Props {
@@ -37,6 +39,8 @@ const Photographer = ({
               dominantColor={profilePicDominantColor}
               url={profilePicUrl}
               imageClassName={styles.profilePic}
+              initialsClassName={styles.profilePic}
+              initials={getInitials(firstName, lastName)}
             />
             <figcaption>
               <h2 className={styles.title}>

@@ -53,8 +53,8 @@ function useBase64File(initialFile?: FileConfig) {
   const [isLoading, setIsloading] = useState(false);
   const [hasError, setHasError] = useState(false);
 
-  async function setFile(file: File) {
-    const base64File = await getBase64FromFile(file);
+  async function setFile(file: File | null) {
+    const base64File = file != null ? await getBase64FromFile(file) : null;
     setBase64File(base64File);
   }
 

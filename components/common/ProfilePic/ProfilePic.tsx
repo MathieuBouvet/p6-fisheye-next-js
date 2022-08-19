@@ -1,5 +1,8 @@
 import cx from "classnames";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+
+import needsWhiteTextToContrast from "@utils/needsWhiteTextToContrast";
 
 import styles from "./profilePic.module.scss";
 
@@ -9,6 +12,8 @@ interface Props {
   url: string | null;
   className?: string;
   imageClassName?: string;
+  initialsClassName?: string;
+  initials: string;
 }
 
 const ProfilePic = ({
@@ -16,24 +21,62 @@ const ProfilePic = ({
   dominantColor,
   url,
   imageClassName,
+  initialsClassName,
   className,
+  initials,
 }: Props) => {
+  const dominantColorHex = `#${dominantColor ?? "ffffff"}`;
+
+  const [, setWindowWidth] = useState(0);
+
+  const initialsRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (initialsRef.current != null) {
+      const width = initialsRef.current.getBoundingClientRect().width;
+      initialsRef.current.style.fontSize = `${width * 0.5 - 5}px`;
+    }
+  });
+
+  useEffect(() => {
+    function onResize() {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener("resize", onResize);
+
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <div
       className={cx(styles.imageWrapper, className)}
-      style={{ backgroundColor: `#${dominantColor}`, maxWidth: size }}
+      style={{
+        backgroundColor: url == null ? dominantColorHex : "#ffffff",
+        width: size,
+      }}
     >
-      <Image
-        src={`/profile-pics/${url}`}
-        alt=""
-        className={imageClassName}
-        layout="intrinsic"
-        width={size}
-        height={size}
-        objectFit="cover"
-        placeholder="blur"
-        blurDataURL={`/profile-pics/placeholders/${url}`}
-      />
+      {url != null ? (
+        <Image
+          src={`/profile-pics/${url}`}
+          alt=""
+          className={imageClassName}
+          layout="intrinsic"
+          width={size}
+          height={size}
+          objectFit="cover"
+          placeholder="blur"
+          blurDataURL={`/profile-pics/placeholders/${url}`}
+        />
+      ) : (
+        <div
+          className={cx(styles.initials, initialsClassName, {
+            [styles.whiteText]: needsWhiteTextToContrast(dominantColorHex),
+          })}
+          ref={initialsRef}
+        >
+          {initials}
+        </div>
+      )}
     </div>
   );
 };

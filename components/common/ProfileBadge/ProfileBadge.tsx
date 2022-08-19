@@ -7,6 +7,8 @@ import ProfilePic from "@components/common/ProfilePic";
 import useMyProfile from "@hooks/useMyProfile";
 import useLogout from "@hooks/useLogout";
 
+import getInitials from "@utils/getInitials";
+
 import styles from "./profileBadge.module.scss";
 
 interface Props {
@@ -28,6 +30,7 @@ const ProfileBadge = ({ size = 65, alignment = "left" }: Props) => {
           dominantColor={profile.profilePicDominantColor}
           url={profile.profilePicUrl}
           size={size}
+          initials={getInitials(profile.firstName, profile.lastName)}
         />
       }
       alignment={alignment}
@@ -35,7 +38,7 @@ const ProfileBadge = ({ size = 65, alignment = "left" }: Props) => {
       <div className={styles.userName}>
         {profile.firstName} {profile.lastName}
       </div>
-      <Link href="/users/my-profile">
+      <Link href="/profile">
         <a className={cx(styles.dropdownItem)}>Mon profil</a>
       </Link>
       <button className={cx(styles.dropdownItem)} onClick={logout}>

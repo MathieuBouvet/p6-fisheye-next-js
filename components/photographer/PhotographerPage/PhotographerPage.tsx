@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 
 import { PhotographerData } from "@lib/model/photographers/getPhotographerById";
 import mediaSort, { SortType, isSortType } from "@lib/mediaSort";
+import getInitials from "@utils/getInitials";
 
 import usePresence from "@hooks/usePresence";
 import useBooleanHashMap from "@hooks/useBooleanHashMap";
@@ -111,6 +112,7 @@ const PhotographerPage = ({
             url={profilePicUrl}
             dominantColor={profilePicDominantColor}
             className={styles.profilePic}
+            initials={getInitials(firstName, lastName)}
           />
           <div className={styles.tags}>
             {tags.map(tag => (

@@ -5,10 +5,19 @@ import requireOwnershipOfUserData from "@lib/auth/accessControl/requireOwnership
 import requireLogin from "@lib/auth/accessControl/requireLogin";
 
 import { findUserByIdOrFail } from "@lib/model/users/findUserById";
-import validateProfilePicData from "@lib/controllers/users/helpers/profilePicValidation";
+import validateProfilePicData, {
+  ProfilePicData,
+} from "@lib/controllers/users/helpers/profilePicValidation";
+import validateBackgroundColor from "@lib/controllers/users/helpers/validateBackgroundColor";
 import { validateUserId } from "@lib/controllers/users/helpers/userValidations";
 
+import updateBackgroundColor from "@lib/model/users/updateBackgroundColor";
 import setProfilePic from "@lib/services/profilePic/setProfilePic";
+
+export type ProfilePicReqBody = {
+  profilePic: ProfilePicData | null;
+  backgroundColor: string | null;
+};
 
 const profilePicController = controller({
   PUT: async (req, res) => {
@@ -21,9 +30,12 @@ const profilePicController = controller({
     requireOwnershipOfUserData(authToken, user);
 
     const profilePicData = validateProfilePicData(req.body);
+    const backgroundColor = validateBackgroundColor(req.body.backgroundColor);
+
+    await updateBackgroundColor(user, backgroundColor);
 
     if (profilePicData != null) {
-      return  setProfilePic(user, profilePicData);
+      return setProfilePic(user, profilePicData);
     }
 
     return { res: "ok" };

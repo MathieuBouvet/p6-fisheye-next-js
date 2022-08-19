@@ -2,7 +2,7 @@ import validator from "@utils/validator";
 
 const isStringLike = (checker: (input: string) => boolean, message: string) =>
   validator((input: any) => {
-    if ((typeof input === "string" && checker(input)) || input == null) {
+    if (input == null || (typeof input === "string" && checker(input))) {
       return [true, input as string | null | undefined] as const;
     }
     return [false, null] as const;
@@ -18,4 +18,4 @@ const isEmail = isStringLike(
   "must be a valid email"
 );
 
-export { isString, isNotEmpty, isEmail, isStringLike as isStringAs };
+export { isString, isNotEmpty, isEmail, isStringLike };
