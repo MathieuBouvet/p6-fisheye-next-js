@@ -79,179 +79,194 @@ const ProfilePage = ({ tags }: Props) => {
         <NavLink href="/profile">Mon profil</NavLink>
         <NavLink href="/not-implemented-yet">Mes oeuvres</NavLink>
       </Header>
-      <main>
-        <p className={styles.groupTitle}>Image de profil</p>
-        <ProfilePicUpdater />
-        <Formik
-          initialValues={initialProfile}
-          onSubmit={async (values, actions) => {
-            setShowError(false);
-            setShowSuccess(false);
-            if (profile != null) {
-              try {
-                const res = await updateUser(profile.id, getUserData(values));
-                mutateProfile({ profile: res });
-                actions.resetForm({ values });
-                setShowSuccess(true);
-              } catch (err) {
-                setShowError(true);
-                actions.resetForm();
+      <main className={styles.main}>
+        <div className={styles.formWrapper}>
+          <div className={styles.profilePicWrapper}>
+            <p className={styles.groupTitle}>Image de profil</p>
+            <ProfilePicUpdater />
+          </div>
+          <Formik
+            initialValues={initialProfile}
+            onSubmit={async (values, actions) => {
+              setShowError(false);
+              setShowSuccess(false);
+              if (profile != null) {
+                try {
+                  const res = await updateUser(profile.id, getUserData(values));
+                  mutateProfile({ profile: res });
+                  actions.resetForm({ values });
+                  setShowSuccess(true);
+                } catch (err) {
+                  setShowError(true);
+                  actions.resetForm();
+                }
               }
-            }
-          }}
-          validate={validateProfileFormData}
-        >
-          {({ dirty, isValid, isSubmitting, errors }) => (
-            <Form
-              className={styles.profileForm}
-              onChange={() => {
-                setShowError(false);
-                setShowSuccess(false);
-              }}
-            >
-              <fieldset className={styles.formGroup}>
-                <legend className={styles.groupTitle}>
-                  Profil utilisateur
-                </legend>
-                <FormikInput name="email" type="email">
-                  Email
-                </FormikInput>
-                <FormikInput name="lastName">Nom</FormikInput>
-                <FormikInput name="firstName">Prénom</FormikInput>
-              </fieldset>
-              <fieldset className={styles.formGroup}>
-                <legend className={styles.groupTitle}>
-                  Profil photographe
-                </legend>
-                <div>
-                  <span
-                    className={cx(styles.pseudoLabel, {
-                      [styles.errorMessage]: errors.tags,
-                    })}
-                  >
-                    Tags
-                    {errors.tags && <> - {errors.tags}</>}
-                  </span>
-                  <div className={styles.tagContainer}>
-                    {tags.map(tag => (
-                      <FormikTagInput value={tag.id.toString()} key={tag.id}>
-                        {tag.name}
-                      </FormikTagInput>
-                    ))}
-                    {pendingTags.map(tag => (
-                      <Tag key={tag.id} className={styles.pendingTag} isActive>
-                        <span title="En attente d'acceptation">
-                          {tag.name} <i className="far fa-hourglass"></i>
-                        </span>
-                      </Tag>
-                    ))}
-                    {isSuggestionRequestPending ? (
-                      <i
+            }}
+            validate={validateProfileFormData}
+          >
+            {({ dirty, isValid, isSubmitting, errors }) => (
+              <Form
+                className={styles.profileForm}
+                onChange={() => {
+                  setShowError(false);
+                  setShowSuccess(false);
+                }}
+              >
+                <fieldset className={styles.formGroup}>
+                  <legend className={styles.groupTitle}>
+                    Profil utilisateur
+                  </legend>
+                  <FormikInput name="email" type="email">
+                    Email
+                  </FormikInput>
+                  <FormikInput name="lastName">Nom</FormikInput>
+                  <FormikInput name="firstName">Prénom</FormikInput>
+                </fieldset>
+                <fieldset className={styles.formGroup}>
+                  <legend className={styles.groupTitle}>
+                    Profil photographe
+                  </legend>
+                  <div>
+                    <span
+                      className={cx(styles.pseudoLabel, {
+                        [styles.errorMessage]: errors.tags,
+                      })}
+                    >
+                      Tags
+                      {errors.tags && <> - {errors.tags}</>}
+                    </span>
+                    <div className={styles.tagContainer}>
+                      {tags.map(tag => (
+                        <FormikTagInput value={tag.id.toString()} key={tag.id}>
+                          {tag.name}
+                        </FormikTagInput>
+                      ))}
+                      {pendingTags.map(tag => (
+                        <Tag
+                          key={tag.id}
+                          className={styles.pendingTag}
+                          isActive
+                        >
+                          <span title="En attente d'acceptation">
+                            {tag.name} <i className="far fa-hourglass"></i>
+                          </span>
+                        </Tag>
+                      ))}
+                      {isSuggestionRequestPending ? (
+                        <i
+                          className={cx(
+                            "fas fa-spinner fa-pulse",
+                            styles.suggestionSpinner
+                          )}
+                        ></i>
+                      ) : isSuggestingTag ? (
+                        <Tag>
+                          <input
+                            className={styles.suggestTagInput}
+                            value={suggestingTagValue}
+                            onChange={e =>
+                              setSuggestingTagValue(e.target.value)
+                            }
+                            ref={el => {
+                              el?.focus();
+                            }}
+                            onBlur={suggestingTagEnd}
+                            onKeyDown={e => {
+                              e.key === "Enter" && suggestingTagEnd();
+                            }}
+                          />
+                        </Tag>
+                      ) : (
+                        <button
+                          type="button"
+                          className={cx("button-bare", styles.suggestTagButton)}
+                          onClick={() => setIsSuggestingTag(true)}
+                        >
+                          Suggérer un tag
+                        </button>
+                      )}
+                    </div>
+                    {suggestionError != null && (
+                      <div
                         className={cx(
-                          "fas fa-spinner fa-pulse",
-                          styles.suggestionSpinner
+                          styles.notification,
+                          styles.error,
+                          styles.tagSuggestionNotification
                         )}
-                      ></i>
-                    ) : isSuggestingTag ? (
-                      <Tag>
-                        <input
-                          className={styles.suggestTagInput}
-                          value={suggestingTagValue}
-                          onChange={e => setSuggestingTagValue(e.target.value)}
-                          ref={el => {
-                            el?.focus();
-                          }}
-                          onBlur={suggestingTagEnd}
-                          onKeyDown={e => {
-                            e.key === "Enter" && suggestingTagEnd();
-                          }}
-                        />
-                      </Tag>
-                    ) : (
-                      <button
-                        type="button"
-                        className={cx("button-bare", styles.suggestTagButton)}
-                        onClick={() => setIsSuggestingTag(true)}
                       >
-                        Suggérer un tag
-                      </button>
+                        <i className="fa fa-exclamation-circle" />
+                        {suggestionError === "network" &&
+                          "Une erreur est survenue pendant la sauvegarde"}
+                        {suggestionError === "duplicates" &&
+                          "Ce tag éxiste déjà"}
+                        <button
+                          className={styles.dismissButton}
+                          onClick={() => setSuggestionError(null)}
+                        >
+                          <i className="far fa-times-circle"></i>
+                        </button>
+                      </div>
                     )}
                   </div>
-                  {suggestionError != null && (
-                    <div
-                      className={cx(
-                        styles.notification,
-                        styles.error,
-                        styles.tagSuggestionNotification
-                      )}
+                  <FormikInput name="country">Pays</FormikInput>
+                  <FormikInput name="city">Ville</FormikInput>
+                  <FormikInput name="tagLine" as="textarea">
+                    Phrase d&apos;accroche
+                  </FormikInput>
+                  <FormikInput name="price" type="number">
+                    Prix
+                  </FormikInput>
+                </fieldset>
+                {dirty && (
+                  <button
+                    className={cx("button-primary", styles.submit)}
+                    type="submit"
+                    disabled={!isValid || isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        Modification
+                        <span className={cx(styles.blink)}>.</span>
+                        <span className={cx(styles.blink, styles.delay1)}>
+                          .
+                        </span>
+                        <span className={cx(styles.blink, styles.delay2)}>
+                          .
+                        </span>
+                      </>
+                    ) : (
+                      <>Modifier</>
+                    )}
+                  </button>
+                )}
+                {showError && (
+                  <div className={cx(styles.notification, styles.error)}>
+                    <i className="fa fa-exclamation-circle" />
+                    Une erreur est survenue pendant la sauvegarde
+                    <button
+                      className={styles.dismissButton}
+                      onClick={() => setShowError(false)}
                     >
-                      <i className="fa fa-exclamation-circle" />
-                      {suggestionError === "network" &&
-                        "Une erreur est survenue pendant la sauvegarde"}
-                      {suggestionError === "duplicates" && "Ce tag éxiste déjà"}
-                      <button
-                        className={styles.dismissButton}
-                        onClick={() => setSuggestionError(null)}
-                      >
-                        <i className="far fa-times-circle"></i>
-                      </button>
-                    </div>
-                  )}
-                </div>
-                <FormikInput name="country">Pays</FormikInput>
-                <FormikInput name="city">Ville</FormikInput>
-                <FormikInput name="tagLine" as="textarea">
-                  Phrase d&apos;accroche
-                </FormikInput>
-                <FormikInput name="price" type="number">
-                  Prix
-                </FormikInput>
-              </fieldset>
-              {dirty && (
-                <button
-                  className={cx("button-primary", styles.submit)}
-                  type="submit"
-                  disabled={!isValid || isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      Modification
-                      <span className={cx(styles.blink)}>.</span>
-                      <span className={cx(styles.blink, styles.delay1)}>.</span>
-                      <span className={cx(styles.blink, styles.delay2)}>.</span>
-                    </>
-                  ) : (
-                    <>Modifier</>
-                  )}
-                </button>
-              )}
-              {showError && (
-                <div className={cx(styles.notification, styles.error)}>
-                  <i className="fa fa-exclamation-circle" />
-                  Une erreur est survenue pendant la sauvegarde
-                  <button
-                    className={styles.dismissButton}
-                    onClick={() => setShowError(false)}
-                  >
-                    <i className="far fa-times-circle"></i>
-                  </button>
-                </div>
-              )}
-              {showSuccess && (
-                <div className={cx(styles.notification, styles.success)}>
-                  <i className="fas fa-check" />
-                  Sauvegarde effectuée
-                  <button
-                    className={styles.dismissButton}
-                    onClick={() => setShowSuccess(false)}
-                  >
-                    <i className="far fa-times-circle"></i>
-                  </button>
-                </div>
-              )}
-            </Form>
-          )}
-        </Formik>
+                      <i className="far fa-times-circle"></i>
+                    </button>
+                  </div>
+                )}
+                {showSuccess && (
+                  <div className={cx(styles.notification, styles.success)}>
+                    <i className="fas fa-check" />
+                    Sauvegarde effectuée
+                    <button
+                      className={styles.dismissButton}
+                      onClick={() => setShowSuccess(false)}
+                    >
+                      <i className="far fa-times-circle"></i>
+                    </button>
+                  </div>
+                )}
+              </Form>
+            )}
+          </Formik>
+        </div>
       </main>
     </div>
   );

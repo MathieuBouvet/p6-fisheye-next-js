@@ -1,11 +1,21 @@
+@use "/styles/mixins/mediaQuery";
+
+.profilePicUpdater {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .cropperContainer {
   position: relative;
-  width: 75%;
   height: 450px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 15px;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .overlayedControl {
@@ -13,8 +23,18 @@
   z-index: 1;
 }
 
+.colorPickerTrigger {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  gap: 8px;
+  cursor: pointer;
+}
+
 .colorPicker {
   width: 50px;
+  margin: 0;
 }
 
 .deleteImageButton {
@@ -25,6 +45,22 @@
   }
 }
 
-.userBadge {
-  width: 350px;
+.userBadgeContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.saveProfilePicButton {
+  padding: 5px 15px;
+}
+
+@include mediaQuery.screen("md") {
+  .saveProfilePicButton {
+    align-self: flex-start;
+  }
 }

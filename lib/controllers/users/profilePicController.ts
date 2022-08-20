@@ -13,6 +13,7 @@ import { validateUserId } from "@lib/controllers/users/helpers/userValidations";
 
 import updateBackgroundColor from "@lib/model/users/updateBackgroundColor";
 import setProfilePic from "@lib/services/profilePic/setProfilePic";
+import resetProfilePic from "@lib/services/profilePic/resetProfilePic";
 
 export type ProfilePicReqBody = {
   profilePic: ProfilePicData | null;
@@ -36,9 +37,9 @@ const profilePicController = controller({
 
     if (profilePicData != null) {
       return setProfilePic(user, profilePicData);
+    } else {
+      return resetProfilePic(user);
     }
-
-    return { res: "ok" };
   },
 });
 

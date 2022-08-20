@@ -6,8 +6,8 @@ import updateProfilePic from "@lib/model/users/updateProfilePic";
 import createImageDeleter from "@lib/services/ImageDeleter/createImageDeleter";
 import { User } from "prisma/prisma-client";
 
-const picsFolder = "profile-pics";
-const placeholdersFolder = `${picsFolder}/placeholders`;
+export const picsFolder = "profile-pics";
+export const placeholdersFolder = `${picsFolder}/placeholders`;
 
 async function setProfilePic(
   user: User,

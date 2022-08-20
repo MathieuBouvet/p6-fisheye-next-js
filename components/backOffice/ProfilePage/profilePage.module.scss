@@ -2,6 +2,19 @@
 @use "/styles/mixins/mediaQuery";
 @use "/styles/constants/animations";
 
+.main {
+  margin-top: 15px;
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.profilePicWrapper {
+  width: 100%;
+}
+
 .profileForm {
   margin-top: 15px;
   margin-bottom: 15px;
@@ -57,6 +70,7 @@
 
   .pendingTag {
     background-color: darken(colors.$color-primary, 15);
+    font-size: 0.95rem;
     i {
       font-size: 0.75rem;
       transform: translateY(-1px);
@@ -147,7 +161,7 @@
 }
 
 @include mediaQuery.screen("md") {
-  .profileForm {
+  .formWrapper {
     max-width: 85%;
   }
 
@@ -158,19 +172,19 @@
 }
 
 @include mediaQuery.screen("lg") {
-  .profileForm {
+  .formWrapper {
     max-width: 75%;
   }
 }
 
 @include mediaQuery.screen("xl") {
-  .profileForm {
+  .formWrapper {
     max-width: 65%;
   }
 }
 
 @include mediaQuery.screen("xxl") {
-  .profileForm {
+  .formWrapper {
     max-width: 55%;
   }
 }

@@ -31,7 +31,9 @@ const ProfilePicUpdater = ({}: Props) => {
     profile?.profilePicDominantColor ?? "ffffff"
   );
 
-  const croppedArea = useRef<Area | null>(null);
+  const croppedArea = useRef<Area>({ height: 0, width: 0, x: 0, y: 0 });
+
+  const [isSaving, setIsSaving] = useState(false);
 
   return (
     <div className={styles.profilePicUpdater}>
@@ -52,6 +54,7 @@ const ProfilePicUpdater = ({}: Props) => {
               }}
             />
             <FileInputButton
+              key="edit-file"
               className={cx(styles.overlayedControl)}
               accept=".jpg, .jpeg, .png"
               onChange={file => {
@@ -75,28 +78,48 @@ const ProfilePicUpdater = ({}: Props) => {
           </>
         ) : (
           <>
-            <ProfilePic
-              dominantColor={backgroundColor}
-              size={350}
-              url={null}
-              initials={getInitials(profile?.firstName, profile?.lastName)}
-              className={styles.userBadge}
-            />
-            <input
-              type="color"
-              className={cx(styles.overlayedControl, styles.colorPicker)}
-              value={`#${backgroundColor}`}
-              onChange={e => {
-                setbackgroundColor(e.target.value.slice(1));
+            <div className={styles.userBadgeContainer}>
+              <ProfilePic
+                dominantColor={backgroundColor}
+                size={350}
+                url={null}
+                initials={getInitials(profile?.firstName, profile?.lastName)}
+              />
+            </div>
+            <FileInputButton
+              key="add-file"
+              className={cx(styles.overlayedControl)}
+              accept=".jpg, .jpeg, .png"
+              onChange={file => {
+                if (file != null) {
+                  setFile(file);
+                }
               }}
-            />
+            >
+              <i className="far fa-image"></i> Ajouter
+            </FileInputButton>
+            <label
+              className={cx(styles.overlayedControl, styles.colorPickerTrigger)}
+            >
+              Arrière plan
+              <input
+                type="color"
+                className={cx(styles.colorPicker)}
+                value={`#${backgroundColor}`}
+                onChange={e => {
+                  setbackgroundColor(e.target.value.slice(1));
+                }}
+              />
+            </label>
           </>
         )}
       </div>
       <button
-        className="button-primary"
+        className={cx("button-primary", styles.saveProfilePicButton)}
+        disabled={isSaving}
         onClick={async () => {
-          if (profile != null && croppedArea.current != null) {
+          if (profile != null) {
+            setIsSaving(true);
             await updateProfilePic(profile.id, {
               profilePic:
                 file != null
@@ -107,11 +130,12 @@ const ProfilePicUpdater = ({}: Props) => {
                   : null,
               backgroundColor,
             });
+            setIsSaving(false);
             mutate();
           }
         }}
       >
-        sauvegarder
+        {!isSaving ? "Enregistrer" : "Enregistrement"}
       </button>
     </div>
   );
