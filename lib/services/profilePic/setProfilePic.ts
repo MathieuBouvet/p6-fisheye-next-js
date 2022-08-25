@@ -1,4 +1,4 @@
-import { ProfilePicData } from "@lib/controllers/users/helpers/profilePicValidation";
+import { CropConfig } from "@lib/controllers/users/helpers/profilePicValidation";
 import createImageSaver from "@lib/services/ImageSaver/createImageSaver";
 import cropImage from "@lib/services/imageProcessing/cropImage";
 import generatePlaceholder from "@lib/services/imageProcessing/generatePlaceholder";
@@ -11,14 +11,13 @@ export const placeholdersFolder = `${picsFolder}/placeholders`;
 
 async function setProfilePic(
   user: User,
-  profilePicData: ProfilePicData
+  imageBase64: string,
+  cropConfig?: CropConfig
 ): Promise<User> {
   const previousUrl = user.profilePicUrl;
 
-  const croppedImage = await cropImage(
-    profilePicData.imageBase64,
-    profilePicData.cropConfig
-  );
+  const croppedImage =
+    cropConfig != null ? await cropImage(imageBase64, cropConfig) : imageBase64;
   const placeholder = await generatePlaceholder(croppedImage);
 
   const croppedImageSaver = createImageSaver(croppedImage);

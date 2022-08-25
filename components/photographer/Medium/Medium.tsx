@@ -1,5 +1,5 @@
 import cx from "classnames";
-import Image from "next/image";
+import CustomLoaderImage from "@components/common/CustomLoaderImage";
 
 import styles from "./medium.module.scss";
 
@@ -33,7 +33,7 @@ const Medium = ({
   const isLiked = likeStatus === "liked";
   const isLikeLoading = likeStatus === "loading";
 
-  const effectiveLikes = likes + Number(isLiked)
+  const effectiveLikes = likes + Number(isLiked);
   return (
     <figure className={cx(styles.medium, className)}>
       <a onClick={onMediaClick} className={styles.mediumLink}>
@@ -42,7 +42,7 @@ const Medium = ({
           style={{ backgroundColor: `#${dominantColor}` }}
         >
           {type === "PICTURE" ? (
-            <Image
+            <CustomLoaderImage
               layout="fill"
               src={`/media/${url}`}
               alt={altText}

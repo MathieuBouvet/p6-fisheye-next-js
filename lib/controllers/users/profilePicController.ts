@@ -36,7 +36,11 @@ const profilePicController = controller({
     await updateBackgroundColor(user, backgroundColor);
 
     if (profilePicData != null) {
-      return setProfilePic(user, profilePicData);
+      return setProfilePic(
+        user,
+        profilePicData.imageBase64,
+        profilePicData.cropConfig
+      );
     } else {
       return resetProfilePic(user);
     }

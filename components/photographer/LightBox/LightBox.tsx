@@ -1,4 +1,4 @@
-import Image from "next/image";
+import CustomLoaderImage from "@components/common/CustomLoaderImage";
 import { useState } from "react";
 import cx from "classnames";
 
@@ -81,7 +81,7 @@ const LightBox = ({ media, inititalMedium, ...props }: Props) => {
                 <p>{medium.altText}</p>
               </video>
             ) : (
-              <Image
+              <CustomLoaderImage
                 src={`/media/${medium.url}`}
                 alt={medium.altText ?? ""}
                 layout="fill"

@@ -10,6 +10,7 @@ export type SaveParams = {
 export abstract class ImageSaver {
   protected imageBase64: string;
   protected extension: string;
+  protected prefixedBase64: string;
 
   constructor(base64: string) {
     const extension = base64.match(base64ImagePrefixRegex)?.[1];
@@ -20,6 +21,7 @@ export abstract class ImageSaver {
 
     this.extension = extension;
     this.imageBase64 = imageBase64;
+    this.prefixedBase64 = base64;
   }
 
   public abstract save(params: SaveParams): Promise<string>;

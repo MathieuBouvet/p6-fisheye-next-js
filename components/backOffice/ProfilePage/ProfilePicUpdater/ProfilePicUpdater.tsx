@@ -3,6 +3,7 @@ import Cropper, { Point, Area } from "react-easy-crop";
 import cx from "classnames";
 
 import updateProfilePic from "@lib/services/clientRequests/updateProfilePic";
+import getMediaBaseUrl from "@lib/services/getMediaBaseUrl";
 
 import useMyProfile from "@hooks/useMyProfile";
 import useBase64File from "@hooks/useBase64File";
@@ -20,7 +21,7 @@ const ProfilePicUpdater = ({}: Props) => {
   const [profile, mutate] = useMyProfile();
   const imageUrl =
     profile != null && profile.profilePicUrl != null
-      ? `/profile-pics/${profile.profilePicUrl}`
+      ? `${getMediaBaseUrl()}/profile-pics/${profile.profilePicUrl}`
       : undefined;
 
   const [currentCrop, setCurrentCrop] = useState<Point>({ x: 0, y: 0 });

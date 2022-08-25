@@ -1,6 +1,7 @@
 import cx from "classnames";
 import { useRef, useState, useEffect } from "react";
-import Image from "next/image";
+import CustomLoaderImage from "@components/common/CustomLoaderImage";
+import getMediaBaseUrl from "@lib/services/getMediaBaseUrl";
 
 import needsWhiteTextToContrast from "@utils/needsWhiteTextToContrast";
 
@@ -56,7 +57,7 @@ const ProfilePic = ({
       }}
     >
       {url != null ? (
-        <Image
+        <CustomLoaderImage
           src={`/profile-pics/${url}`}
           alt=""
           className={imageClassName}
@@ -65,7 +66,7 @@ const ProfilePic = ({
           height={size}
           objectFit="cover"
           placeholder="blur"
-          blurDataURL={`/profile-pics/placeholders/${url}`}
+          blurDataURL={`${getMediaBaseUrl()}/profile-pics/placeholders/${url}`}
         />
       ) : (
         <div
