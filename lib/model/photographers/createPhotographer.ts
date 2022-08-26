@@ -19,7 +19,7 @@ async function createPhotographer({
 }: Params) {
   const user = await createUser(restUser);
 
-  return prisma.photographer.create({
+  const photographer = await prisma.photographer.create({
     data: {
       user: {
         connect: {
@@ -41,6 +41,11 @@ async function createPhotographer({
       country,
     },
   });
+
+  return {
+    ...photographer,
+    user,
+  };
 }
 
 export default createPhotographer;

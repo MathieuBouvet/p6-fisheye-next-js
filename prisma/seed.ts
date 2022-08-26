@@ -1,13 +1,15 @@
 import prisma from "@lib/model/prisma";
 import createPhotographer from "@lib/model/photographers/createPhotographer";
 import createUser from "@lib/model/users/createUser";
+import seedProfilePic from "./seedProfilePic";
+import seedMedium from "./seedMedium";
 
 import {
   photographers,
   media,
   pictureDominantColor,
   profilePicDominantColor,
-} from "./seedData";
+} from "@seedFiles/seedData";
 
 function range(start: number, size: number): number[] {
   const range = [];
@@ -64,6 +66,8 @@ async function main() {
       tags,
     });
 
+    await seedProfilePic(photographerInstance.user);
+
     const photographerMedia = media.filter(
       medium => medium.photographerId === id
     );
@@ -119,6 +123,8 @@ async function main() {
           },
         },
       });
+
+      await seedMedium(mediumInstance);
 
       const likeCreationPromises = range(1, photographerMedium.likes).map(i => {
         return prisma.like.create({

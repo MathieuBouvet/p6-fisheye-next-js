@@ -1,5 +1,6 @@
 import cx from "classnames";
 import CustomLoaderImage from "@components/common/CustomLoaderImage";
+import getMediaBaseUrl from "@lib/services/getMediaBaseUrl";
 
 import styles from "./medium.module.scss";
 
@@ -50,7 +51,7 @@ const Medium = ({
               sizes="(max-width: 584px) 100vw, (max-width: 1124px) 50vw, 33vw"
               onLoadingComplete={onLoadingComplete}
               placeholder="blur"
-              blurDataURL={`/media/placeholders/${url}`}
+              blurDataURL={`${getMediaBaseUrl()}/media/placeholders/${url}`}
             />
           ) : (
             <>
@@ -63,7 +64,7 @@ const Medium = ({
                 className={styles.video}
                 onLoadedData={onLoadingComplete}
               >
-                <source src={`/media/${url}`} />
+                <source src={`${getMediaBaseUrl()}/media/${url}`} />
                 <p>{altText}</p>
               </video>
               <div className={styles.videoIconWrapper}>

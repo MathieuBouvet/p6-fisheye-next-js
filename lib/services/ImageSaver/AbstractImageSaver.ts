@@ -1,4 +1,5 @@
 import { base64ImagePrefixRegex } from "@lib/validators/hasSupportedBase64ImageExtension";
+const base64VideoPrefixRegex = /^data:video\/(mp4)\;base64,/;
 
 export type SaveParams = {
   folder: string;
@@ -13,7 +14,8 @@ export abstract class ImageSaver {
   protected prefixedBase64: string;
 
   constructor(base64: string) {
-    const extension = base64.match(base64ImagePrefixRegex)?.[1];
+    const extension = (base64.match(base64ImagePrefixRegex) ||
+      base64.match(base64VideoPrefixRegex))?.[1];
     const imageBase64 = base64.split(",")[1];
     if (extension == null || imageBase64 == null) {
       throw new Error("Invalid base64 sent to file saver");

@@ -27,7 +27,8 @@
       "@styles/*": ["styles/*"],
       "@components/*": ["components/*"],
       "@utils/*": ["utils/*"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "@seedFiles/*": ["seedFiles/*"]
     }
   },
   "include": [

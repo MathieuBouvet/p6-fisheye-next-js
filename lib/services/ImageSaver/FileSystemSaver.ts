@@ -21,7 +21,12 @@ class FileSystemSaver extends ImageSaver {
       withGeneratedId ? "-" + crypto.randomUUID() : ""
     }${withAutoExtension ? "." + this.extension : ""}`;
 
-    await fs.writeFile(`${path}/${generatedName}`, this.imageBase64, "base64");
+    await fs
+      .writeFile(`${path}/${generatedName}`, this.imageBase64, "base64")
+      .catch(err => {
+        console.log("error is here");
+        return Promise.reject(err);
+      });
     return generatedName;
   }
 }

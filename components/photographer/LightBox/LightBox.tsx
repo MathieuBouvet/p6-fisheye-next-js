@@ -5,6 +5,7 @@ import cx from "classnames";
 import { PhotographerData } from "@lib/model/photographers/getPhotographerById";
 
 import useDisableBodyScroll from "@hooks/useDisableBodyScroll";
+import getMediaBaseUrl from "@lib/services/getMediaBaseUrl";
 
 import AnimatedModal, {
   AnimatedProps,
@@ -77,7 +78,7 @@ const LightBox = ({ media, inititalMedium, ...props }: Props) => {
           >
             {medium.type === "VIDEO" ? (
               <video className={styles.video} controls>
-                <source src={`/media/${medium.url}`} />
+                <source src={`${getMediaBaseUrl()}/media/${medium.url}`} />
                 <p>{medium.altText}</p>
               </video>
             ) : (
@@ -87,7 +88,7 @@ const LightBox = ({ media, inititalMedium, ...props }: Props) => {
                 layout="fill"
                 objectFit="contain"
                 placeholder="blur"
-                blurDataURL={`/media/placeholders/${medium.url}`}
+                blurDataURL={`${getMediaBaseUrl()}/media/placeholders/${medium.url}`}
                 key={medium.url}
                 className={styles.image}
               />
