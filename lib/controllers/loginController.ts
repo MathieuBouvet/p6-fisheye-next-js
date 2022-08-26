@@ -33,10 +33,9 @@ const loginController = controller({
 
     const [authToken, csrfToken] = await generateTokens(user);
 
-    const cookies = new Cookies(req, res);
+    const cookies = new Cookies(req, res, { secure: true });
     cookies.set("auth_token", authToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
     });
 
     return { csrfToken };
