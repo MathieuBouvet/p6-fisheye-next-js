@@ -126,23 +126,23 @@ async function main() {
 
       await seedMedium(mediumInstance);
 
-      const likeCreationPromises = range(1, photographerMedium.likes).map(i => {
-        return prisma.like.create({
-          data: {
-            visitor: {
-              connect: {
-                ipAddress: ipBase + i,
-              },
-            },
-            medium: {
-              connect: {
-                id: mediumInstance.id,
-              },
-            },
-          },
-        });
-      });
-      await Promise.all(likeCreationPromises);
+      // const likeCreationPromises = range(1, photographerMedium.likes).map(i => {
+      //   return prisma.like.create({
+      //     data: {
+      //       visitor: {
+      //         connect: {
+      //           ipAddress: ipBase + i,
+      //         },
+      //       },
+      //       medium: {
+      //         connect: {
+      //           id: mediumInstance.id,
+      //         },
+      //       },
+      //     },
+      //   });
+      // });
+      // await Promise.all(likeCreationPromises);
     }
   }
 
