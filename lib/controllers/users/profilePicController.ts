@@ -14,6 +14,7 @@ import { validateUserId } from "@lib/controllers/users/helpers/userValidations";
 import updateBackgroundColor from "@lib/model/users/updateBackgroundColor";
 import setProfilePic from "@lib/services/profilePic/setProfilePic";
 import resetProfilePic from "@lib/services/profilePic/resetProfilePic";
+import triggerBuild from "@lib/services/triggerBuild";
 
 export type ProfilePicReqBody = {
   profilePic: ProfilePicData | null;
@@ -35,15 +36,16 @@ const profilePicController = controller({
 
     await updateBackgroundColor(user, backgroundColor);
 
-    if (profilePicData != null) {
-      return setProfilePic(
-        user,
-        profilePicData.imageBase64,
-        profilePicData.cropConfig
-      );
-    } else {
-      return resetProfilePic(user);
-    }
+    const updatedUser = await (profilePicData != null
+      ? setProfilePic(
+          user,
+          profilePicData.imageBase64,
+          profilePicData.cropConfig
+        )
+      : resetProfilePic(user));
+
+    triggerBuild();
+    return updatedUser;
   },
 });
 

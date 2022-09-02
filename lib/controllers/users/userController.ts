@@ -5,6 +5,7 @@ import controller from "@utils/controller";
 import extractAuthToken from "@lib/auth/extractAuthToken";
 import requireOwnershipOfUserData from "@lib/auth/accessControl/requireOwnershipOfUserData";
 import requireLogin from "@lib/auth/accessControl/requireLogin";
+import triggerBuild from "@lib/services/triggerBuild";
 
 import updateUser from "@lib/model/users/updateUser";
 import getUserProfile from "@lib/model/users/getUserProfile";
@@ -45,6 +46,7 @@ const userController = controller({
 
     try {
       await updateUser({ id: user.id, ...userData });
+      triggerBuild();
     } catch (err) {
       updateUserErrorHandler(err);
     }
